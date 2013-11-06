@@ -18,6 +18,7 @@
   background-color: #c2c25b;
   text-align: right;
   padding: 2px;
+  width: 100%;
 }
 
 .post-it .header:hover {
@@ -28,6 +29,9 @@
   text-decoration: none;
   color: black;
   font-weight: bold;
+  float: right;
+  margin: 0px 5px;
+
 }
 
 .post-it .header a:hover {

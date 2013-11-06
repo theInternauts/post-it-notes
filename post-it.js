@@ -1,21 +1,78 @@
+
+
 var Board = function( selector ) {
-  // Your board related code goes here
-  
-  // Use $elem to access the DOM element for this board
+  var list = [];
   var $elem = $( selector );
-  
+
   function initialize() {
-    // What needs to happen when this object is created?
+    $elem.on('dblclick' , function(event){
+      pos = {top: event.pageY, left: event.pageX};
+      console.log(event.timeStamp);
+      add_post(new PostIt({ id: event.timeStamp}),pos);
+    });
+
+    // $().on('blur', function(){});
+
   };
 
-  initialize();
+  function add_post(item, position) {
+    list.push(item);
+    var $post_it = $('#master-post-it').clone().css({display:'block'}).css(position).attr('id',item.id).appendTo($elem);
+    $post_it.draggable({handle: '.header'});
+
+    $post_it.find('.header-label').on('click',function(){
+      $(this).focus();
+    });
+
+    $post_it.find('.header a').on('click', function(event){
+      event.stopPropagation();
+      delete_post(item)
+    });
+
+  };
+
+  function delete_post(item) {
+    console.log('#' + item.id);
+    $('#' + item.id).remove();
+    // need method/logic to find and destroy the corrensponding PostIt in the board.list array
+  };
+
+  function remove_reflow(id){
+    var found = false;
+    for(var i=0; i<list.length; i++)
+    {
+      post = list[i]
+      if(post.id == id && !found){
+        found = true;
+        post.destroy;
+        list[i] = list[i+1];
+      }
+    }
+    if(found){
+        list.pop();
+    }
+    return found;
+  };
 };
 
-var PostIt = function() {
-  // Your post-it related code goes here
+  post_count = function(){ return list.length; };
+  post_list = function(){ return list; };
+  initialize();
+
+  return {
+    post_count: post_count,
+    post_list: post_list
+  }
+};
+
+var PostIt = function(data) {
+  this.header = data.header;
+  this.content = data.content;
+  this.id = data.id;
 };
 
 $(function() {
   // This code will run when the DOM has finished loading
-  Board.new('#board');
+  new Board('#board');
 });
+
