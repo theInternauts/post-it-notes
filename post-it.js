@@ -35,6 +35,7 @@ var Board = function( selector ) {
     console.log('#' + item.id);
     $('#' + item.id).remove();
     // need method/logic to find and destroy the corrensponding PostIt in the board.list array
+    remove_reflow(item.id);
   };
 
   function remove_reflow(id){
@@ -53,7 +54,6 @@ var Board = function( selector ) {
     }
     return found;
   };
-};
 
   post_count = function(){ return list.length; };
   post_list = function(){ return list; };
