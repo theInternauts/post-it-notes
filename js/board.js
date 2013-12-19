@@ -1,5 +1,3 @@
-
-
 var Board = function( selector ) {
   var list = [];
   var $elem = $( selector );
@@ -38,8 +36,8 @@ var Board = function( selector ) {
     });
 
     $post_it.find('.content').on('blur', function(){
-       update_post(item)
-    });
+     update_post(item)
+   });
   };
 
   function update_post(model_post){
@@ -72,10 +70,11 @@ var Board = function( selector ) {
       }
     }
     if(found){
-        list.pop();
+      list.pop();
     }
     return found;
   };
+
 
   post_count = function(){ return list.length; };
   post_list = function(){ return list; };
@@ -86,7 +85,7 @@ var Board = function( selector ) {
     }
     return id_list
   }
-  
+
   initialize();
 
   return {
@@ -95,21 +94,4 @@ var Board = function( selector ) {
     post_id_list: post_id_list
   }
 };
-
-var PostIt = function(data) {
-    this.header = data.header
-    this.content = data.content
-    var id = data.id
-
-    this.getId = function(){ return id }
-
-    this.update = function(new_data){
-      this.header = new_data.header;
-      this.content = new_data.content;
-    }
-};
-
-$(function() {
-  b = new Board('#board');
-});
 
