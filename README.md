@@ -3,11 +3,11 @@ post-it-notes
 
 experiments with DOM manipulation, OO JS, and data models
 
-##Raodmap
+##Roadmap
 (in no particular order)
 + UI design overhaul
 + Groups of notes on a single board
-+ major canvas zooming capability for an ~~"infinite board"~~
++ major canvas zooming capability for an *"infinite board"*
 + named groups
 + Photo notes
 + Video notes
