@@ -48,7 +48,6 @@ var Board = function( selector ) {
     temp.header = $('#' + pid).find('.header-label').html()
     temp.content = $('#' + pid).find('.content').html()
     model_post.update(temp)
-    console.log("blur: ", temp)
   }
 
   function delete_post(item) {
