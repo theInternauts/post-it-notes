@@ -34,29 +34,30 @@ var Board = function( selector ) {
     });
 
     $post_it.find('.header-label').on('blur', function(){
-      var temp = {}
-      temp.header = $(this).html()
-      temp.content = $post_it.find('.content').html()
-      item.update(temp)
-      console.log("blur: ", temp)
+      update_post(item)
     });
 
     $post_it.find('.content').on('blur', function(){
-      var temp = {}
-      temp.header = $(this).html()
-      temp.content = $post_it.find('.header-label').html()
-      item.update(temp)
-      console.log("blur: ", temp)
+       update_post(item)
     });
   };
+
+  function update_post(model_post){
+    var pid = model_post.id
+    var temp = {}
+    temp.header = $('#' + pid).find('.header-label').html()
+    temp.content = $('#' + pid).find('.content').html()
+    model_post.update(temp)
+    console.log("blur: ", temp)
+  }
 
   function delete_post(item) {
     console.log('#' + item.id);
     $('#' + item.id).remove();
-    // need method/logic to find and destroy the corresponding PostIt in the board.list array
     remove_reflow(item.id);
   };
 
+  //a method to find and destroy an instance of the PostIt model AND shift the items in the containing array
   function remove_reflow(id){
     var found = false;
     var post
@@ -73,7 +74,6 @@ var Board = function( selector ) {
       }
     }
     if(found){
-        //BUG: this deletes the LAST item in the array NOT the one I just searched for!
         list.pop();
     }
     return found;
