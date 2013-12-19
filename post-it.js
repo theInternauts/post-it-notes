@@ -24,6 +24,10 @@ var Board = function( selector ) {
       $(this).focus();
     });
 
+    $post_it.find('.content').on('click', function(){
+      $(this).focus();
+    });
+
     $post_it.find('.header a').on('click', function(event){
       event.stopPropagation();
       delete_post(item)
@@ -33,6 +37,14 @@ var Board = function( selector ) {
       var temp = {}
       temp.header = $(this).html()
       temp.content = $post_it.find('.content').html()
+      item.update(temp)
+      console.log("blur: ", temp)
+    });
+
+    $post_it.find('.content').on('blur', function(){
+      var temp = {}
+      temp.header = $(this).html()
+      temp.content = $post_it.find('.header-label').html()
       item.update(temp)
       console.log("blur: ", temp)
     });
