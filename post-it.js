@@ -79,11 +79,20 @@ var Board = function( selector ) {
 
   post_count = function(){ return list.length; };
   post_list = function(){ return list; };
+  post_id_list = function(){
+    id_list = ""
+    for(var i = 0;i<list.length; i++){
+      id_list += " " + list[i].getId()
+    }
+    return id_list
+  }
+  
   initialize();
 
   return {
     post_count: post_count,
-    post_list: post_list
+    post_list: post_list,
+    post_id_list: post_id_list
   }
 };
 
