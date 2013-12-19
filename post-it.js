@@ -17,7 +17,7 @@ var Board = function( selector ) {
 
   function add_post(item, position) {
     list.push(item);
-    var $post_it = $('#master-post-it').clone().css({display:'block'}).css(position).attr('id',item.id).appendTo($elem);
+    var $post_it = $('#master-post-it').clone().css({display:'block'}).css(position).attr('id',item.getId()).appendTo($elem);
     $post_it.draggable({handle: '.header'});
 
     $post_it.find('.header-label').on('click', function(){
@@ -43,7 +43,7 @@ var Board = function( selector ) {
   };
 
   function update_post(model_post){
-    var pid = model_post.id
+    var pid = model_post.getId()
     var temp = {}
     temp.header = $('#' + pid).find('.header-label').html()
     temp.content = $('#' + pid).find('.content').html()
@@ -51,19 +51,18 @@ var Board = function( selector ) {
   }
 
   function delete_post(item) {
-    console.log('#' + item.id);
-    $('#' + item.id).remove();
-    remove_reflow(item.id);
+    console.log('#' + item.getId());
+    $('#' + item.getId()).remove();
+    remove_reflow(item.getId());
   };
 
   //a method to find and destroy an instance of the PostIt model AND shift the items in the containing array
   function remove_reflow(id){
     var found = false;
     var post
-    for(var i=0; i<list.length; i++)
-    {
+    for(var i=0; i<list.length; i++){
       post = list[i]
-      if(post.id == id && !found){
+      if(post.getId() == id && !found){
         found = true;
         post.destroy;
       }
@@ -91,11 +90,13 @@ var Board = function( selector ) {
 var PostIt = function(data) {
     this.header = data.header
     this.content = data.content
-    this.id = data.id
+    var id = data.id
+
+    this.getId = function(){ return id }
 
     this.update = function(new_data){
-      this.header = data.header;
-      this.content = data.content;
+      this.header = new_data.header;
+      this.content = new_data.content;
     }
 };
 
