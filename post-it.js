@@ -34,7 +34,7 @@ var Board = function( selector ) {
   function delete_post(item) {
     console.log('#' + item.id);
     $('#' + item.id).remove();
-    // need method/logic to find and destroy the corrensponding PostIt in the board.list array
+    // need method/logic to find and destroy the corresponding PostIt in the board.list array
     remove_reflow(item.id);
   };
 
@@ -47,12 +47,9 @@ var Board = function( selector ) {
       if(post.id == id && !found){
         found = true;
         post.destroy;
-        /*
-        BUG: I think there's a logic bug in the next line.  
-        Does this simply duplicate the contents of list[i+1]?
-        or does it simply have list[i] and list[i+1] pointing to the same thing?
-        neither is good, BTW.
-        */
+      }
+
+      if(found){
         list[i] = list[i+1];
       }
     }
