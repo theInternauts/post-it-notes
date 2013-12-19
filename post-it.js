@@ -40,16 +40,24 @@ var Board = function( selector ) {
 
   function remove_reflow(id){
     var found = false;
+    var post
     for(var i=0; i<list.length; i++)
     {
       post = list[i]
       if(post.id == id && !found){
         found = true;
         post.destroy;
+        /*
+        BUG: I think there's a logic bug in the next line.  
+        Does this simply duplicate the contents of list[i+1]?
+        or does it simply have list[i] and list[i+1] pointing to the same thing?
+        neither is good, BTW.
+        */
         list[i] = list[i+1];
       }
     }
     if(found){
+        //BUG: this deletes the LAST item in the array NOT the one I just searched for!
         list.pop();
     }
     return found;
@@ -73,6 +81,6 @@ var PostIt = function(data) {
 
 $(function() {
   // This code will run when the DOM has finished loading
-  new Board('#board');
+  b = new Board('#board');
 });
 
