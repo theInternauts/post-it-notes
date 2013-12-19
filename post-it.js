@@ -20,7 +20,7 @@ var Board = function( selector ) {
     var $post_it = $('#master-post-it').clone().css({display:'block'}).css(position).attr('id',item.id).appendTo($elem);
     $post_it.draggable({handle: '.header'});
 
-    $post_it.find('.header-label').on('click',function(){
+    $post_it.find('.header-label').on('click', function(){
       $(this).focus();
     });
 
@@ -29,6 +29,13 @@ var Board = function( selector ) {
       delete_post(item)
     });
 
+    $post_it.find('.header-label').on('blur', function(){
+      var temp = {}
+      temp.header = $(this).html()
+      temp.content = $post_it.find('.content').html()
+      item.update(temp)
+      console.log("blur: ", temp)
+    });
   };
 
   function delete_post(item) {
@@ -71,13 +78,17 @@ var Board = function( selector ) {
 };
 
 var PostIt = function(data) {
-  this.header = data.header;
-  this.content = data.content;
-  this.id = data.id;
+    this.header = data.header
+    this.content = data.content
+    this.id = data.id
+
+    this.update = function(new_data){
+      this.header = data.header;
+      this.content = data.content;
+    }
 };
 
 $(function() {
-  // This code will run when the DOM has finished loading
   b = new Board('#board');
 });
 
