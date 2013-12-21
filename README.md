@@ -2,6 +2,7 @@ post-it-notes
 =============
 
 experiments with DOM manipulation, OO JS, and data models
+(currently using D3.js and jQuery)
 
 ##Roadmap
 (in no particular order)
