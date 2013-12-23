@@ -6,6 +6,17 @@
   position: relative;
 }
 
+#main-toolbar {
+  width: 100%;
+  padding: 5px;
+  background-color: #fff;
+}
+
+#main-toolbar ul li {
+  display: inline-block;
+  padding-left: 15px;
+}
+
 .post-it {
   position: absolute !important;
   width: 160px;
