@@ -10,6 +10,11 @@ var Board = function( selector ) {
       add_post(new PostIt({ id: event.timeStamp}),pos);
     });
 
+    $('#btn-new-group').on('click' , function(event){
+      pos = {top: 62, left: 10};
+      group_create({ name: "" }, pos)
+    });
+    
     // $().on('blur', function(){});
 
   };
@@ -103,7 +108,6 @@ var Board = function( selector ) {
 
     $group.find('.header a').on('click', function(event){
       event.stopPropagation();
-      // console.log(this)
       group_delete(item)
     });   
   };
