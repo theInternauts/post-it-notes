@@ -54,26 +54,26 @@ var Board = function( selector ) {
   function delete_post(item) {
     console.log('#' + item.getId());
     $('#' + item.getId()).remove();
-    remove_reflow(item.getId());
+    remove_reflow(item.getId(), list);
   };
 
   //a method to find and destroy an instance of the PostIt model AND shift the items in the containing array
-  function remove_reflow(id){
+  function remove_reflow(id, collection){
     var found = false;
     var post
-    for(var i=0; i<list.length; i++){
-      post = list[i]
+    for(var i=0; i<collection.length; i++){
+      post = collection[i]
       if(post.getId() == id && !found){
         found = true;
         post.destroy;
       }
 
       if(found){
-        list[i] = list[i+1];
+        collection[i] = collection[i+1];
       }
     }
     if(found){
-      list.pop();
+      collection.pop();
     }
     return found;
   };
@@ -91,7 +91,7 @@ var Board = function( selector ) {
   /***** Groups functions  *****/
 
   function group_create(options, position) {
-    item = new post_group(options)
+    var item = new post_group(options)
     console.log(item.getId())
     groups.push(item);
     var $group = $('#master-post-it-group').clone().css({display:'block'}).css(position).attr('id',item.getId()).appendTo($elem);
@@ -103,8 +103,15 @@ var Board = function( selector ) {
 
     $group.find('.header a').on('click', function(event){
       event.stopPropagation();
-      console.log("group delete")
+      // console.log(this)
+      group_delete(item)
     });   
+  };
+
+  function group_delete(group){
+    console.log(group.getId());
+    $('#' + group.getId()).remove();
+    remove_reflow(group.getId(), groups);
   };
 
   function group_count(){ return groups.length }
