@@ -96,11 +96,16 @@ var Board = function( selector ) {
     groups.push(item);
   };
 
+  function group_count(){ return groups.length }
+  
+  initialize();
+
   return {
     post_count: post_count,
     post_list: post_list,
     post_id_list: post_id_list,
-    group_create: group_create
+    group_create: group_create,
+    group_count: group_count
   }
 };
 
