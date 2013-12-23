@@ -87,8 +87,8 @@
   color: #eee;
 }
 
-.post-it-group .content {
+.post-it-group > .content {
   padding: 10px;
-  min-height: 70px;
+  min-height: 170px;
   outline: none;
 }

@@ -101,6 +101,15 @@ var Board = function( selector ) {
     groups.push(item);
     var $group = $('#master-post-it-group').clone().css({display:'block'}).css(position).attr('id',item.getId()).appendTo($elem);
     $group.draggable({handle: '.header'});
+    $group.children('.content').droppable({ 
+      accept: ".post-it",
+      drop: function(event, ui){ 
+        console.log("dropped")
+        ui.draggable.css({left:'19px'})
+        $(this).append(ui.draggable)
+
+      }
+    })
     
     $group.find('.header-label').on('click', function(){
       $(this).focus();
@@ -117,7 +126,7 @@ var Board = function( selector ) {
     $('#' + group.getId()).remove();
     remove_reflow(group.getId(), groups);
   };
-
+  
   function group_count(){ return groups.length }
   function group_list(){ return groups; }
   function group_id_list(){
