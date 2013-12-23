@@ -92,8 +92,19 @@ var Board = function( selector ) {
 
   function group_create(options, position) {
     item = new post_group(options)
-    console.log("group: ", item.getId())
+    console.log(item.getId())
     groups.push(item);
+    var $group = $('#master-post-it-group').clone().css({display:'block'}).css(position).attr('id',item.getId()).appendTo($elem);
+    $group.draggable({handle: '.header'});
+    
+    $group.find('.header-label').on('click', function(){
+      $(this).focus();
+    });
+
+    $group.find('.header a').on('click', function(event){
+      event.stopPropagation();
+      console.log("group delete")
+    });   
   };
 
   function group_count(){ return groups.length }

@@ -43,3 +43,41 @@
   min-height: 70px;
   outline: none;
 }
+
+.post-it-group {
+  position: absolute !important;
+  width: 190px;
+  box-shadow: inset 0px 2px 8px #887B5D;
+  overflow: hidden;
+  border-radius: 7px;
+}
+
+.post-it-group .header {
+  background-color: #928465;
+  text-align: right;
+  padding: 2px;
+  width: 100%;
+}
+
+.post-it-group .header:hover {
+  background-color: #a8a860;
+}
+
+.post-it-group .header a, .post-it-group .header a:visited {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  float: right;
+  margin: 0px 5px;
+
+}
+
+.post-it-group .header a:hover {
+  color: #eee;
+}
+
+.post-it-group .content {
+  padding: 10px;
+  min-height: 70px;
+  outline: none;
+}
