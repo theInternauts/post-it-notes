@@ -98,6 +98,14 @@ var Board = function( selector ) {
 
   function group_count(){ return groups.length }
   function group_list(){ return groups; }
+  function group_id_list(){
+    id_list = ""
+    for(var i = 0;i<groups.length; i++){
+      id_list += " " + groups[i].getId()
+    }
+    return id_list
+  }
+
   
   initialize();
 
@@ -107,7 +115,8 @@ var Board = function( selector ) {
     post_id_list: post_id_list,
     group_create: group_create,
     group_count: group_count,
-    group_list: group_list
+    group_list: group_list,
+    group_id_list: group_id_list
   }
 };
 
