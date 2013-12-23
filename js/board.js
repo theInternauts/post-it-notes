@@ -1,5 +1,6 @@
 var Board = function( selector ) {
   var list = [];
+  var groups = []
   var $elem = $( selector );
 
   function initialize() {
@@ -12,6 +13,8 @@ var Board = function( selector ) {
     // $().on('blur', function(){});
 
   };
+
+  /****  Post functions ****/
 
   function add_post(item, position) {
     list.push(item);
@@ -37,7 +40,7 @@ var Board = function( selector ) {
 
     $post_it.find('.content').on('blur', function(){
      update_post(item)
-   });
+    });
   };
 
   function update_post(model_post){
@@ -75,7 +78,6 @@ var Board = function( selector ) {
     return found;
   };
 
-
   post_count = function(){ return list.length; };
   post_list = function(){ return list; };
   post_id_list = function(){
@@ -86,12 +88,21 @@ var Board = function( selector ) {
     return id_list
   }
 
+  /***** Groups functions  *****/
+
+  function group_create(options, position) {
+    item = new post_group(options)
+    console.log("group: ", item.getId())
+    groups.push(item);
+  };
+
   initialize();
 
   return {
     post_count: post_count,
     post_list: post_list,
-    post_id_list: post_id_list
+    post_id_list: post_id_list,
+    group_create: group_create
   }
 };
 
