@@ -78,9 +78,9 @@ var Board = function( selector ) {
     return found;
   };
 
-  post_count = function(){ return list.length; };
-  post_list = function(){ return list; };
-  post_id_list = function(){
+  function post_count(){ return list.length; };
+  function post_list(){ return list; };
+  function post_id_list(){
     id_list = ""
     for(var i = 0;i<list.length; i++){
       id_list += " " + list[i].getId()
@@ -95,8 +95,6 @@ var Board = function( selector ) {
     console.log("group: ", item.getId())
     groups.push(item);
   };
-
-  initialize();
 
   return {
     post_count: post_count,
