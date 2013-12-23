@@ -97,6 +97,7 @@ var Board = function( selector ) {
   };
 
   function group_count(){ return groups.length }
+  function group_list(){ return groups; }
   
   initialize();
 
@@ -105,7 +106,8 @@ var Board = function( selector ) {
     post_list: post_list,
     post_id_list: post_id_list,
     group_create: group_create,
-    group_count: group_count
+    group_count: group_count,
+    group_list: group_list
   }
 };
 
