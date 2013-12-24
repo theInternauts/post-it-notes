@@ -110,6 +110,7 @@ var Board = function( selector ) {
 
   function group_create(options, position) {
     var item = new post_group(options)
+    test_group = item
     console.log(item.getId())
     groups.push(item);
     var $group = $('#master-post-it-group').clone().css({display:'block'}).css(position).attr('id',item.getId()).appendTo($elem);
@@ -121,14 +122,27 @@ var Board = function( selector ) {
       }
     })
     
-    $group.find('.header-label').on('click', function(){
-      $(this).focus();
+    $group.find('.header-label').on('click', function(event){
+      $(this).focus()
+    }).on('keydown', function(event){
+      event.stopPropagation()
+      var buttonCode = event.which || event.keyCode;
+      console.log("btn: ", buttonCode)
+      if(buttonCode == 13){
+        event.preventDefault()
+        update_group(item)
+      }
     });
 
     $group.find('.header a').on('click', function(event){
-      event.stopPropagation();
+      event.stopPropagation()
       group_delete(item)
-    });   
+    });
+
+    $group.find('.header-label').on('blur', function(){
+      update_group(item)
+    });
+   
   };
   
   function group_delete(group){
@@ -151,17 +165,18 @@ var Board = function( selector ) {
     var node = ui.draggable
     var nodeID = node.attr('id')
     var groupNodeID = event.target.parentNode.id
-    z = retrieve(nodeID, list)
     tempGroup = retrieve(groupNodeID, groups)
     x = tempGroup.getList().length 
     offset = 30 + (x*10 + x*110)
     node.css({left:'20px',top: offset})
     $('#' + groupNodeID +' .content.ui-droppable').height(offset+85).append(node)
     tempGroup.addPost(retrieve(nodeID, list)) //update the model
-    console.log("node: ", node)
-    console.log("groupNodeID: ",groupNodeID)
-    console.log("retrieve: ", tempGroup)
-    console.log("dropped", offset)
+  }
+
+  function update_group(model_group){
+    var gid = model_group.getId()
+    temp_name = $('#' + gid).find('.header-label').html()
+    model_group.name = temp_name
   }
   
   initialize();
