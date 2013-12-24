@@ -156,7 +156,7 @@ var Board = function( selector ) {
     x = tempGroup.getList().length 
     offset = 30 + (x*10 + x*110)
     node.css({left:'20px',top: offset})
-    $('#' + groupNodeID +' .content').height(offset+100).append(node)
+    $('#' + groupNodeID +' .content.ui-droppable').height(offset+85).append(node)
     tempGroup.addPost(retrieve(nodeID, list)) //update the model
     console.log("node: ", node)
     console.log("groupNodeID: ",groupNodeID)
