@@ -38,6 +38,13 @@ var Board = function( selector ) {
 
     $post_it.find('.header-label').on('click', function(){
       $(this).focus();
+    }).on('keydown', function(event){
+      event.stopPropagation()
+      var buttonCode = event.which || event.keyCode;
+      if(buttonCode == 13){
+        event.preventDefault()
+        update_post(item)
+      }
     });
 
     $post_it.find('.content').on('click', function(){
@@ -110,7 +117,6 @@ var Board = function( selector ) {
 
   function group_create(options, position) {
     var item = new post_group(options)
-    test_group = item
     console.log(item.getId())
     groups.push(item);
     var $group = $('#master-post-it-group').clone().css({display:'block'}).css(position).attr('id',item.getId()).appendTo($elem);
@@ -127,7 +133,6 @@ var Board = function( selector ) {
     }).on('keydown', function(event){
       event.stopPropagation()
       var buttonCode = event.which || event.keyCode;
-      console.log("btn: ", buttonCode)
       if(buttonCode == 13){
         event.preventDefault()
         update_group(item)
