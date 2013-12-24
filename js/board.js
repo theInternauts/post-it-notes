@@ -170,12 +170,22 @@ var Board = function( selector ) {
     var node = ui.draggable
     var nodeID = node.attr('id')
     var groupNodeID = event.target.parentNode.id
-    tempGroup = retrieve(groupNodeID, groups)
-    x = tempGroup.getList().length 
-    offset = 30 + (x*10 + x*110)
-    node.css({left:'20px',top: offset})
-    $('#' + groupNodeID +' .content.ui-droppable').height(offset+85).append(node)
+    var tempGroup = retrieve(groupNodeID, groups)
+    var offset = calculate_group_offset(tempGroup)
+    node.css({left:'20px', top: offset})
+    update_group_height(tempGroup).append(node)
     tempGroup.addPost(retrieve(nodeID, list)) //update the model
+  }
+
+  function calculate_group_offset(model_group){
+    var x = model_group.getList().length 
+    offset = 30 + (x*10 + x*110)
+    return offset
+  }
+
+  function update_group_height(model_group){
+    var offset = calculate_group_offset(model_group)
+    return $('#' + model_group.getId() +' .content.ui-droppable').height(offset+85)
   }
 
   function update_group(model_group){
