@@ -6,12 +6,16 @@ experiments with DOM manipulation, OO JS, and data models
 
 ##Roadmap
 (in no particular order)
++ ~~header labels~~
 + UI design overhaul
 + Groups of notes on a single board
-+ major canvas zooming capability for an *"infinite board"*
-+ named groups
++ major canvas zooming capability for an *"infinite board"* (d3.js)
++ ~~named groups~~
 + Photo notes
 + Video notes
++ needs a proper demo page
++ persistent storage (local)
++ persistent storage (server)
 + Oauth sign in with Google
 + Oauth sign in with Twitter
 + Oauth sign in with Facebook
