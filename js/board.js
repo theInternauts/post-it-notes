@@ -38,6 +38,13 @@ var Board = function( selector ) {
 
     $post_it.find('.header-label').on('click', function(){
       $(this).focus();
+    }).on('keydown', function(event){
+      event.stopPropagation()
+      var buttonCode = event.which || event.keyCode;
+      if(buttonCode == 13){
+        event.preventDefault()
+        update_post(item)
+      }
     });
 
     $post_it.find('.content').on('click', function(){
@@ -121,14 +128,26 @@ var Board = function( selector ) {
       }
     })
     
-    $group.find('.header-label').on('click', function(){
-      $(this).focus();
+    $group.find('.header-label').on('click', function(event){
+      $(this).focus()
+    }).on('keydown', function(event){
+      event.stopPropagation()
+      var buttonCode = event.which || event.keyCode;
+      if(buttonCode == 13){
+        event.preventDefault()
+        update_group(item)
+      }
     });
 
     $group.find('.header a').on('click', function(event){
-      event.stopPropagation();
+      event.stopPropagation()
       group_delete(item)
-    });   
+    });
+
+    $group.find('.header-label').on('blur', function(){
+      update_group(item)
+    });
+   
   };
   
   function group_delete(group){
@@ -151,17 +170,28 @@ var Board = function( selector ) {
     var node = ui.draggable
     var nodeID = node.attr('id')
     var groupNodeID = event.target.parentNode.id
-    z = retrieve(nodeID, list)
-    tempGroup = retrieve(groupNodeID, groups)
-    x = tempGroup.getList().length 
-    offset = 30 + (x*10 + x*110)
-    node.css({left:'20px',top: offset})
-    $('#' + groupNodeID +' .content.ui-droppable').height(offset+85).append(node)
+    var tempGroup = retrieve(groupNodeID, groups)
+    var offset = calculate_group_offset(tempGroup)
+    node.css({left:'20px', top: offset})
+    update_group_height(tempGroup).append(node)
     tempGroup.addPost(retrieve(nodeID, list)) //update the model
-    console.log("node: ", node)
-    console.log("groupNodeID: ",groupNodeID)
-    console.log("retrieve: ", tempGroup)
-    console.log("dropped", offset)
+  }
+
+  function calculate_group_offset(model_group){
+    var x = model_group.getList().length 
+    offset = 30 + (x*10 + x*110)
+    return offset
+  }
+
+  function update_group_height(model_group){
+    var offset = calculate_group_offset(model_group)
+    return $('#' + model_group.getId() +' .content.ui-droppable').height(offset+85)
+  }
+
+  function update_group(model_group){
+    var gid = model_group.getId()
+    temp_name = $('#' + gid).find('.header-label').html()
+    model_group.name = temp_name
   }
   
   initialize();
