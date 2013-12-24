@@ -19,6 +19,16 @@ var Board = function( selector ) {
 
   };
 
+  function retrieve(id, collection){
+    var target
+    for(var i = 0; i<collection.length; i++){
+      if(collection[i].getId() == id){
+        target = collection[i]
+      }
+    }
+    return target
+  };
+
   /****  Post functions ****/
 
   function add_post(item, position) {
@@ -62,25 +72,28 @@ var Board = function( selector ) {
     remove_reflow(item.getId(), list);
   };
 
-  //a method to find and destroy an instance of the PostIt model AND shift the items in the containing array
+  /*
+  A method to find and destroy an instance of the PostIt model 
+  AND shift the items in the containing array
+  */
   function remove_reflow(id, collection){
-    var found = false;
+    var isFound = false;
     var post
     for(var i=0; i<collection.length; i++){
       post = collection[i]
-      if(post.getId() == id && !found){
-        found = true;
+      if(post.getId() == id && !isFound){
+        isFound = true;
         post.destroy;
       }
 
-      if(found){
+      if(isFound){
         collection[i] = collection[i+1];
       }
     }
-    if(found){
+    if(isFound){
       collection.pop();
     }
-    return found;
+    return isFound;
   };
 
   function post_count(){ return list.length; };
@@ -103,11 +116,8 @@ var Board = function( selector ) {
     $group.draggable({handle: '.header'});
     $group.children('.content').droppable({ 
       accept: ".post-it",
-      drop: function(event, ui){ 
-        console.log("dropped")
-        ui.draggable.css({left:'19px'})
-        $(this).append(ui.draggable)
-
+      drop: function(event, ui){
+        group_drop_handler(event, ui)
       }
     })
     
@@ -120,7 +130,7 @@ var Board = function( selector ) {
       group_delete(item)
     });   
   };
-
+  
   function group_delete(group){
     console.log(group.getId());
     $('#' + group.getId()).remove();
@@ -137,6 +147,22 @@ var Board = function( selector ) {
     return id_list
   }
 
+  function group_drop_handler(event, ui){
+    var node = ui.draggable
+    var nodeID = node.attr('id')
+    var groupNodeID = event.target.parentNode.id
+    z = retrieve(nodeID, list)
+    tempGroup = retrieve(groupNodeID, groups)
+    x = tempGroup.getList().length 
+    offset = 30 + (x*10 + x*110)
+    node.css({left:'20px',top: offset})
+    $('#' + groupNodeID +' .content').height(offset+100).append(node)
+    tempGroup.addPost(retrieve(nodeID, list)) //update the model
+    console.log("node: ", node)
+    console.log("groupNodeID: ",groupNodeID)
+    console.log("retrieve: ", tempGroup)
+    console.log("dropped", offset)
+  }
   
   initialize();
 

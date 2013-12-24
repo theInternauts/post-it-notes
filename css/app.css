@@ -17,50 +17,13 @@
   padding-left: 15px;
 }
 
-.post-it {
-  position: absolute !important;
-  width: 160px;
-  background-color: yellow;
-  box-shadow: -2px 2px 5px #555;
-  overflow: hidden;
-}
-
-.post-it .header {
-  background-color: #c2c25b;
-  text-align: right;
-  padding: 2px;
-  width: 100%;
-}
-
-.post-it .header:hover {
-  background-color: #a8a860;
-}
-
-.post-it .header a, .post-it .header a:visited {
-  text-decoration: none;
-  color: black;
-  font-weight: bold;
-  float: right;
-  margin: 0px 5px;
-
-}
-
-.post-it .header a:hover {
-  color: #eee;
-}
-
-.post-it .content {
-  padding: 10px;
-  min-height: 70px;
-  outline: none;
-}
-
 .post-it-group {
   position: absolute !important;
   width: 190px;
   box-shadow: inset 0px 2px 8px #887B5D;
   overflow: hidden;
   border-radius: 7px;
+  z-index: 1000;
 }
 
 .post-it-group .header {
@@ -89,6 +52,48 @@
 
 .post-it-group > .content {
   padding: 10px;
-  min-height: 170px;
+  min-height: 115px;
   outline: none;
 }
+
+.post-it {
+  position: absolute !important;
+  width: 160px;
+  background-color: yellow;
+  box-shadow: -2px 2px 5px #555;
+  overflow: hidden;
+  z-index: 10000;
+}
+
+.post-it .header {
+  background-color: #c2c25b;
+  text-align: right;
+  padding: 2px;
+  width: 100%;
+}
+
+.post-it .header:hover {
+  background-color: #a8a860;
+}
+
+.post-it .header a, .post-it .header a:visited {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  float: right;
+  margin: 0px 5px;
+  border: 1px solid #c2c25b;
+  background-color: #B4B459;
+
+}
+
+.post-it .header a:hover {
+  color: #eee;
+}
+
+.post-it .content {
+  padding: 10px;
+  min-height: 70px;
+  outline: none;
+}
+
