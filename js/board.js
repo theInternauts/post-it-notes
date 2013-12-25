@@ -39,7 +39,7 @@ var Board = function( selector ) {
     $post_it.find('.header-label').on('click', function(){
       $(this).focus();
     }).on('keydown', function(event){
-      event.stopPropagation()
+      // event.stopPropagation()
       var buttonCode = event.which || event.keyCode;
       if(buttonCode == 13){
         event.preventDefault()
@@ -53,6 +53,12 @@ var Board = function( selector ) {
 
     $post_it.find('.header a').on('click', function(event){
       event.stopPropagation();
+      var parentGroupId = $(this).parents('.post-it-group').attr('id')
+      if(parentGroupId){
+        xtempGroup = retrieve(parentGroupId, groups)
+        xtempGroup.removePost(item)
+        update_group_height(xtempGroup)
+      }
       delete_post(item)
     });
 
@@ -139,7 +145,7 @@ var Board = function( selector ) {
       }
     });
 
-    $group.find('.header a').on('click', function(event){
+    $group.find('.header:first a').on('click', function(event){
       event.stopPropagation()
       group_delete(item)
     });
@@ -147,11 +153,11 @@ var Board = function( selector ) {
     $group.find('.header-label').on('blur', function(){
       update_group(item)
     });
-   
+    
   };
   
   function group_delete(group){
-    console.log(group.getId());
+    console.log('#' + group.getId());
     $('#' + group.getId()).remove();
     remove_reflow(group.getId(), groups);
   };
@@ -170,7 +176,7 @@ var Board = function( selector ) {
     var node = ui.draggable
     var nodeID = node.attr('id')
     var groupNodeID = event.target.parentNode.id
-    var tempGroup = retrieve(groupNodeID, groups)
+    tempGroup = retrieve(groupNodeID, groups)
     var offset = calculate_group_offset(tempGroup)
     node.css({left:'20px', top: offset})
     update_group_height(tempGroup).append(node)
@@ -180,6 +186,7 @@ var Board = function( selector ) {
   function calculate_group_offset(model_group){
     var x = model_group.getList().length 
     offset = 30 + (x*10 + x*110)
+    console.log("x: ", x, " offset: ", offset)
     return offset
   }
 
