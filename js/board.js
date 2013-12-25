@@ -55,11 +55,16 @@ var Board = function( selector ) {
       event.stopPropagation();
       var parentGroupId = $(this).parents('.post-it-group').attr('id')
       if(parentGroupId){
-        xtempGroup = retrieve(parentGroupId, groups)
-        xtempGroup.removePost(item)
+        var xtempGroup = retrieve(parentGroupId, groups)
+        var tId = $(event.target).parents('.post-it').attr('id')
+        var tpost = retrieve(tId, list)
+        xtempGroup.removePost(tpost)//update post-group model
+        delete_post(tpost) //update board model and DOM
+        reorder_group_posts(xtempGroup)
         update_group_height(xtempGroup)
+      } else {
+        delete_post(item)
       }
-      delete_post(item)
     });
 
     $post_it.find('.header-label').on('blur', function(){
@@ -135,9 +140,9 @@ var Board = function( selector ) {
     })
 
     $group.find('.content:first').on('dragstart', '.post-it', function(event){ 
-      tempPost = retrieve(event.target.id, list)
-      console.log('tempPost: ', tempPost)
+      var tempPost = retrieve(event.target.id, list)
       item.removePost(tempPost)
+      reorder_group_posts(item)
       console.log("group drag start: ", item.getList())
     })
     
@@ -183,7 +188,7 @@ var Board = function( selector ) {
     var node = ui.draggable
     var nodeID = node.attr('id')
     var groupNodeID = event.target.parentNode.id
-    tempGroup = retrieve(groupNodeID, groups)
+    var tempGroup = retrieve(groupNodeID, groups)
     var offset = calculate_group_offset(tempGroup)
     node.css({left:'20px', top: offset})
     update_group_height(tempGroup).append(node)
@@ -192,7 +197,7 @@ var Board = function( selector ) {
 
   function calculate_group_offset(model_group){
     var x = model_group.getList().length 
-    offset = 30 + (x*10 + x*110)
+    var offset = 30 + (x*10 + x*110)
     console.log("x: ", x, " offset: ", offset)
     return offset
   }
@@ -204,10 +209,19 @@ var Board = function( selector ) {
 
   function update_group(model_group){
     var gid = model_group.getId()
-    temp_name = $('#' + gid).find('.header-label').html()
+    var temp_name = $('#' + gid).find('.header-label').html()
     model_group.name = temp_name
   }
-  
+
+  function reorder_group_posts(model_group){
+    var offset
+    tempPosts = model_group.getList()
+    for(var x = 0; x < tempPosts.length; x++){
+      offset = 30 + (x*10 + x*110)
+      $('#' + tempPosts[x]).animate({ top: offset })
+    }
+  }
+
   initialize();
 
   return {
