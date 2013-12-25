@@ -34,7 +34,7 @@ var Board = function( selector ) {
   function add_post(item, position) {
     list.push(item);
     var $post_it = $('#master-post-it').clone().css({display:'block'}).css(position).attr('id',item.getId()).appendTo($elem);
-    $post_it.draggable({handle: '.header'});
+    $post_it.draggable({ handle: '.header' });
 
     $post_it.find('.header-label').on('click', function(){
       $(this).focus();
@@ -132,6 +132,13 @@ var Board = function( selector ) {
       drop: function(event, ui){
         group_drop_handler(event, ui)
       }
+    })
+
+    $group.find('.content:first').on('dragstart', '.post-it', function(event){ 
+      tempPost = retrieve(event.target.id, list)
+      console.log('tempPost: ', tempPost)
+      item.removePost(tempPost)
+      console.log("group drag start: ", item.getList())
     })
     
     $group.find('.header-label').on('click', function(event){
