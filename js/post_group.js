@@ -10,7 +10,9 @@ var post_group = function(options){
   this.getId = function(){ return id }
   this.getList = function(){ return list }
   this.addPost = function(post){
-    list.push(post.getId())
+    if(list.indexOf(post.getId()) < 0){
+      list.push(post.getId())
+    }
   }
   this.removePost = function(post){
     remove_reflow(post.getId(),list)

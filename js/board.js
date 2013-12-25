@@ -34,12 +34,12 @@ var Board = function( selector ) {
   function add_post(item, position) {
     list.push(item);
     var $post_it = $('#master-post-it').clone().css({display:'block'}).css(position).attr('id',item.getId()).appendTo($elem);
-    $post_it.draggable({handle: '.header'});
+    $post_it.draggable({ handle: '.header' });
 
     $post_it.find('.header-label').on('click', function(){
       $(this).focus();
     }).on('keydown', function(event){
-      event.stopPropagation()
+      // event.stopPropagation()
       var buttonCode = event.which || event.keyCode;
       if(buttonCode == 13){
         event.preventDefault()
@@ -53,7 +53,18 @@ var Board = function( selector ) {
 
     $post_it.find('.header a').on('click', function(event){
       event.stopPropagation();
-      delete_post(item)
+      var parentGroupId = $(this).parents('.post-it-group').attr('id')
+      if(parentGroupId){
+        var xtempGroup = retrieve(parentGroupId, groups)
+        var tId = $(event.target).parents('.post-it').attr('id')
+        var tpost = retrieve(tId, list)
+        xtempGroup.removePost(tpost)//update post-group model
+        delete_post(tpost) //update board model and DOM
+        reorder_group_posts(xtempGroup)
+        update_group_height(xtempGroup)
+      } else {
+        delete_post(item)
+      }
     });
 
     $post_it.find('.header-label').on('blur', function(){
@@ -127,6 +138,13 @@ var Board = function( selector ) {
         group_drop_handler(event, ui)
       }
     })
+
+    $group.find('.content:first').on('dragstart', '.post-it', function(event){ 
+      var tempPost = retrieve(event.target.id, list)
+      item.removePost(tempPost)
+      reorder_group_posts(item)
+      console.log("group drag start: ", item.getList())
+    })
     
     $group.find('.header-label').on('click', function(event){
       $(this).focus()
@@ -139,7 +157,7 @@ var Board = function( selector ) {
       }
     });
 
-    $group.find('.header a').on('click', function(event){
+    $group.find('.header:first a').on('click', function(event){
       event.stopPropagation()
       group_delete(item)
     });
@@ -147,11 +165,11 @@ var Board = function( selector ) {
     $group.find('.header-label').on('blur', function(){
       update_group(item)
     });
-   
+    
   };
   
   function group_delete(group){
-    console.log(group.getId());
+    console.log('#' + group.getId());
     $('#' + group.getId()).remove();
     remove_reflow(group.getId(), groups);
   };
@@ -179,7 +197,8 @@ var Board = function( selector ) {
 
   function calculate_group_offset(model_group){
     var x = model_group.getList().length 
-    offset = 30 + (x*10 + x*110)
+    var offset = 30 + (x*10 + x*110)
+    console.log("x: ", x, " offset: ", offset)
     return offset
   }
 
@@ -190,10 +209,19 @@ var Board = function( selector ) {
 
   function update_group(model_group){
     var gid = model_group.getId()
-    temp_name = $('#' + gid).find('.header-label').html()
+    var temp_name = $('#' + gid).find('.header-label').html()
     model_group.name = temp_name
   }
-  
+
+  function reorder_group_posts(model_group){
+    var offset
+    tempPosts = model_group.getList()
+    for(var x = 0; x < tempPosts.length; x++){
+      offset = 30 + (x*10 + x*110)
+      $('#' + tempPosts[x]).animate({ top: offset })
+    }
+  }
+
   initialize();
 
   return {
