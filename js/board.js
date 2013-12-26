@@ -127,7 +127,7 @@ var Board = function( selector ) {
   /***** Groups functions  *****/
 
   function group_create(options, position) {
-    var item = new post_group(options)
+     item = new post_group(options)
     console.log(item.getId())
     groups.push(item);
     var $group = $('#master-post-it-group').clone().css({display:'block'}).css(position).attr('id',item.getId()).appendTo($elem);
@@ -215,10 +215,10 @@ var Board = function( selector ) {
 
   function reorder_group_posts(model_group){
     var offset
-    tempPosts = model_group.getList()
+    var tempPosts = model_group.getList()
     for(var x = 0; x < tempPosts.length; x++){
       offset = 30 + (x*10 + x*110)
-      $('#' + tempPosts[x]).animate({ top: offset })
+      $('#' + tempPosts[x]).animate({ left:'20px', top: offset })
     }
   }
 
