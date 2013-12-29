@@ -8,7 +8,7 @@ experiments with DOM manipulation, OO JS, and data models
 (in no particular order)
 + ~~header labels~~
 + UI design overhaul
-+ Groups of notes on a single board
++ ~~Groups of notes on a single board~~
 + major canvas zooming capability for an *"infinite board"* (d3.js)
 + ~~named groups~~
 + Photo notes
