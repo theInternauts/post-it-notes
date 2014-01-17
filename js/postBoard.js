@@ -15,7 +15,12 @@ PostBoard.Views.Toolbar = Backbone.View.extend({
 	    this.$el.html(this.template(this.model))
 	    this.$el.attr('id', 'main-toolbar')
 		return this
-	}
+	},
+	events: {
+    	'dblclick ul': 'test'
+	},
+	test: function(event){ console.log("testing: ", event)}
+	
 })
 
 PostBoard.Views.PostItView = Backbone.View.extend({
@@ -23,8 +28,8 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 	render: function () {
 	    this.$el.html(this.template(this.model))
 	    this.$el.attr({ 
-	    	class: 'post-it',
-	    	display: 'block'
+	    	'class': 'post-it',
+	    	'display': 'block'
 		})
 		return this
 	}
@@ -32,18 +37,16 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 
 PostBoard.Views.MainBoard = Backbone.View.extend({
 	events: {
-    	'click div': 'addPostIt'
+    	'click body': 'addPostIt'
 	},
 	render: function(){
-		this.el = document.getElementsByTagName('body')
-		this.$el = $('body')
-		this.$el.attr('id', 'board')
-		this.$el.append(new PostBoard.Views.Toolbar().render().el)
-		// this.$el.appendTo('body')
+		this.setElement('html')
+		this.$('body').attr('id', 'board')
+		this.$('body').append(new PostBoard.Views.Toolbar().render().el)
 		return this
 	},
-	addPostIt: function(data_model){
-		this.$el.append(new PostBoard.Views.PostItView({ model: data_model }).render().el )
+	addPostIt: function(){
+		this.$('body').append(new PostBoard.Views.PostItView({ model: new PostBoard.Models.PostIt({ header: "asd", content: "asd"})}).render().el )
 	}
 })
 
