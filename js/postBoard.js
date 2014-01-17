@@ -32,7 +32,7 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 
 PostBoard.Views.MainBoard = Backbone.View.extend({
 	events: {
-    	'click div.header': 'addPostIt'
+    	'click div': 'addPostIt'
 	},
 	render: function(){
 		this.el = document.getElementsByTagName('body')
@@ -41,6 +41,9 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		this.$el.append(new PostBoard.Views.Toolbar().render().el)
 		// this.$el.appendTo('body')
 		return this
+	},
+	addPostIt: function(data_model){
+		this.$el.append(new PostBoard.Views.PostItView({ model: data_model }).render().el )
 	}
 })
 
