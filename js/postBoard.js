@@ -22,11 +22,18 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 	template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
 	render: function () {
 	    this.$el.html(this.template(this.model))
+	    this.$el.attr({ 
+	    	class: 'post-it',
+	    	display: 'block'
+		})
 		return this
 	}
 })
 
 PostBoard.Views.MainBoard = Backbone.View.extend({
+	events: {
+    	'click div.header': 'addPostIt'
+	},
 	render: function(){
 		this.el = document.getElementsByTagName('body')
 		this.$el = $('body')
