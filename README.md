@@ -1,5 +1,9 @@
 post-it-notes
 =============
+ToDo: 
++ Need to re-tool with Backbone
++ choose a server-side platform (Node.js? Rails?)
+
 
 experiments with DOM manipulation, OO JS, and data models
 (currently using D3.js and jQuery)
