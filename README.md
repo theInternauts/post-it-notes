@@ -2,7 +2,8 @@ post-it-notes
 =============
 ToDo: 
 + Need to re-tool with Backbone
-+ choose a server-side platform (Node.js? Rails?)
++ Choose a server-side platform (Node.js? Rails?)
++ Serialize data storage schema
 
 
 experiments with DOM manipulation, OO JS, and data models
