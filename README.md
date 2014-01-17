@@ -7,15 +7,15 @@ ToDo:
 
 
 experiments with DOM manipulation, OO JS, and data models
-(currently using D3.js and jQuery)
+(currently using Backbone.js)
 
 ##Roadmap
 (in no particular order)
 + ~~header labels~~
 + UI design overhaul
-+ ~~Groups of notes on a single board~~
-+ major canvas zooming capability for an *"infinite board"* (d3.js)
-+ ~~named groups~~
++ Groups of notes on a single board
++ major canvas zooming capability for an *"infinite board"*
++ named groups
 + Photo notes
 + Video notes
 + needs a proper demo page
