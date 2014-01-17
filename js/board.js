@@ -1,3 +1,5 @@
+var PostBoard = { Models: {}, Views: {}, Collections: {}, Helpers: {} }
+
 var Board = function( selector ) {
   var list = [];
   var groups = []
