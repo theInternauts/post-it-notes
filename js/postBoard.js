@@ -46,7 +46,12 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		return this
 	},
 	addPostIt: function(){
-		this.$('body').append(new PostBoard.Views.PostItView({ model: new PostBoard.Models.PostIt({ header: "asd", content: "asd"})}).render().el )
+		var newPost = new PostBoard.Models.PostIt({ header: "asd", content: "asd"})
+		this.allPosts.add(newPost)
+		this.$('body').append(new PostBoard.Views.PostItView({ model: newPost }).render().el )
+	},
+	initialize: function(){
+		this.allPosts = new PostBoard.Collections.PostItCollection()
 	}
 })
 
