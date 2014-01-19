@@ -37,7 +37,8 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 
 PostBoard.Views.MainBoard = Backbone.View.extend({
 	events: {
-    	'click body': 'addPostItHandler'
+    	'click body': 'addPostItHandler',
+    	'click .post-it>.header>a': 'removePostItHandler'
 	},
 	render: function(){
 		this.setElement('html')
@@ -46,21 +47,32 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		return this
 	},
 	addPostItHandler: function(event){
+		event.stopPropagation()
 		var position = { top: event.pageY, left: event.pageX };
     	console.log(event.timeStamp);
-    	this.addPostIt({ id: event.timeStamp, position: position });
+    	this.addPostIt({ id: event.timeStamp.toString(), position: position });
 	},
 	addPostIt: function(post_data){
 		var post_data = post_data
-		!post_data.id ? post_data.id = Date.now() : null
+		!post_data.id ? post_data.id = Date.now().toString() : null
 		var newPost = new PostBoard.Models.PostIt(post_data)
 		this.allPosts.add(newPost)
 		this.$('body').append(new PostBoard.Views.PostItView({ model: newPost }).render().$el.css(newPost.get('position')).attr('id',newPost.get('id')))
 		return newPost
 	},
+	removePostItByID: function(id){
+		console.log('#'+id)
+		this.$('#'+id).remove()
+		targets = this.allPosts.where({ id: id })
+		this.allPosts.remove(targets)
+	},
+	removePostItHandler: function(event){
+		event.stopPropagation()
+		this.removePostItByID($(event.target).parents('.post-it').attr('id'))
+	},
 	initialize: function(){
 		this.allPosts = new PostBoard.Collections.PostItCollection()
 		this.$('body').on('click', this.addPostItHandler)
-	}
+	},
 })
 
