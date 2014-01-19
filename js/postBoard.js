@@ -37,7 +37,7 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 
 PostBoard.Views.MainBoard = Backbone.View.extend({
 	events: {
-    	'click body': 'addPostIt'
+    	'click body': 'addPostItHandler'
 	},
 	render: function(){
 		this.setElement('html')
@@ -45,13 +45,22 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		this.$('body').append(new PostBoard.Views.Toolbar().render().el)
 		return this
 	},
-	addPostIt: function(){
-		var newPost = new PostBoard.Models.PostIt({ header: "asd", content: "asd"})
+	addPostItHandler: function(event){
+		var position = { top: event.pageY, left: event.pageX };
+    	console.log(event.timeStamp);
+    	this.addPostIt({ id: event.timeStamp, position: position });
+	},
+	addPostIt: function(post_data){
+		var post_data = post_data
+		!post_data.id ? post_data.id = Date.now() : null
+		var newPost = new PostBoard.Models.PostIt(post_data)
 		this.allPosts.add(newPost)
-		this.$('body').append(new PostBoard.Views.PostItView({ model: newPost }).render().el )
+		this.$('body').append(new PostBoard.Views.PostItView({ model: newPost }).render().$el.css(newPost.get('position')).attr('id',newPost.get('id')))
+		return newPost
 	},
 	initialize: function(){
 		this.allPosts = new PostBoard.Collections.PostItCollection()
+		this.$('body').on('click', this.addPostItHandler)
 	}
 })
 
