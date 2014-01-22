@@ -38,6 +38,8 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 PostBoard.Views.MainBoard = Backbone.View.extend({
 	events: {
     	'click body': 'addPostItHandler',
+    	'click .post-it>.header': 'setFocus',
+    	'click .post-it>.content': 'setFocus',
     	'click .post-it>.header>a': 'removePostItHandler'
 	},
 	render: function(){
@@ -45,6 +47,11 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		this.$('body').attr('id', 'board')
 		this.$('body').append(new PostBoard.Views.Toolbar().render().el)
 		return this
+	},
+	setFocus: function(event){
+		console.log("yup")
+		event.stopPropagation()
+		this.$(event.target).focus()		
 	},
 	addPostItHandler: function(event){
 		event.stopPropagation()
