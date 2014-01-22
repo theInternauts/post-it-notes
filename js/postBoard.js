@@ -64,12 +64,12 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		!post_data.id ? post_data.id = Date.now().toString() : null
 		var newPost = new PostBoard.Models.PostIt(post_data)
 		this.allPosts.add(newPost)
-		this.$('body').append(new PostBoard.Views.PostItView({ model: newPost }).render().$el.css(newPost.get('position')).attr('id',newPost.get('id')))
+		this.$('body').append(new PostBoard.Views.PostItView({ model: newPost }).render().$el.css(newPost.get('position')).attr('id',newPost.get('id')).draggable({ handle: '.header'}))
 		return newPost
 	},
 	removePostItByID: function(id){
 		console.log('#'+id)
-		this.$('#'+id).remove()
+		this.$('#'+id).draggable('destroy').remove()
 		targets = this.allPosts.where({ id: id })
 		this.allPosts.remove(targets)
 	},
