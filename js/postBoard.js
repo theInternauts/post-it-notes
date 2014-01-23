@@ -80,7 +80,7 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 	initialize: function(){
 		this.allPosts = new PostBoard.Collections.PostItCollection()
 		this.$('body').on('click', this.addPostItHandler)
-	},
+	}
 })
 
 my_item = null
