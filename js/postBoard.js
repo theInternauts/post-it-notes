@@ -18,9 +18,6 @@ PostBoard.Views.Toolbar = Backbone.View.extend({
 	},
 	events: {
     	'dblclick ul': 'test'
-	},
-	test: function(event){ 
-		console.log("testing: ", event)
 	}
 	
 })
