@@ -1,3 +1,3 @@
 $(function() {
-  b = new Board('#board');
-});
+  b = new PostBoard.Views.MainBoard().render()
+})
