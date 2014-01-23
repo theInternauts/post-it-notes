@@ -19,7 +19,9 @@ PostBoard.Views.Toolbar = Backbone.View.extend({
 	events: {
     	'dblclick ul': 'test'
 	},
-	test: function(event){ console.log("testing: ", event)}
+	test: function(event){ 
+		console.log("testing: ", event)
+	}
 	
 })
 
@@ -32,6 +34,9 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 	    	'display': 'block'
 		})
 		return this
+	},
+	initialize: function(){
+		console.log(this.model.get('id'))
 	}
 })
 
@@ -56,7 +61,6 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 	addPostItHandler: function(event){
 		event.stopPropagation()
 		var position = { top: event.pageY, left: event.pageX };
-    	console.log(event.timeStamp);
     	this.addPostIt({ id: event.timeStamp.toString(), position: position });
 	},
 	addPostIt: function(post_data){
@@ -83,3 +87,4 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 	},
 })
 
+my_item = null
