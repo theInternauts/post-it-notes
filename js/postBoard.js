@@ -56,30 +56,33 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 	},
 	addPostItHandler: function(event){
 		event.stopPropagation()
-		var position = { top: event.pageY, left: event.pageX };
-    	this.addPostIt({ id: event.timeStamp.toString(), position: position });
+		var position = { top: event.pageY, left: event.pageX }
+    	this.allPostModels.add(new PostBoard.Models.PostIt({ id: event.timeStamp.toString(), position: position }))
 	},
-	addPostIt: function(post_data){
-		var post_data = post_data
-		!post_data.id ? post_data.id = Date.now().toString() : null
-		var newPost = new PostBoard.Models.PostIt(post_data)
-		this.allPosts.add(newPost)
-		this.$('body').append(new PostBoard.Views.PostItView({ model: newPost }).render().$el.css(newPost.get('position')).attr('id',newPost.get('id')).draggable({ handle: '.header'}))
-		return newPost
+	addPostIt: function(post_model){
+		var post_model = post_model
+		!post_model.get('id') ? post_model.set('id') = Date.now().toString() : null
+		!post_model.get('position') ? post_model.set('position') = { top: 50, left: 50 } : null
+		var newView = new PostBoard.Views.PostItView({ model: post_model })
+		this.allPostViews[post_model.get('id')] = newView;
+		this.$('body').append(newView.render().$el.css(post_model.get('position')).attr('id',post_model.get('id')).draggable({ handle: '.header'}))
+		return this
 	},
 	removePostItByID: function(id){
 		console.log('#'+id)
 		this.$('#'+id).draggable('destroy').remove()
-		targets = this.allPosts.where({ id: id })
-		this.allPosts.remove(targets)
+		targets = this.allPostModels.where({ id: id })
+		this.allPostModels.remove(targets)
 	},
 	removePostItHandler: function(event){
 		event.stopPropagation()
 		this.removePostItByID($(event.target).parents('.post-it').attr('id'))
 	},
 	initialize: function(){
-		this.allPosts = new PostBoard.Collections.PostItCollection()
+		this.allPostModels = new PostBoard.Collections.PostItCollection()
+		this.allPostViews = {}
 		this.$('body').on('click', this.addPostItHandler)
+		this.allPostModels.on('add', this.addPostIt, this)
 	}
 })
 
