@@ -54,7 +54,6 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		return this
 	},
 	setFocus: function(event){
-		console.log("yup")
 		event.stopPropagation()
 		this.$(event.target).focus()		
 	},
