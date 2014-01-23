@@ -33,7 +33,6 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 		return this
 	},
 	updatePostFromModel: function(post_model){
-		console.log("View model: ", post_model)
 		this.$('.header-label').text(post_model.get('header'))
 		this.$('.content').html(post_model.get('content'))
 	},	
@@ -91,10 +90,8 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 	},
 	updatePostHandler: function(event){
 		var targetID = $(event.target).parents('.post-it').attr('id')
-		console.log("DOM to model: ", targetID)
 		var headerText = this.$('#' + targetID + ' .header-label').text()
 		var contentText = this.$('#' + targetID	+ ' .content').html()
-		console.log("headerText: ", headerText, "contentText: ", contentText)
 		var targetView = this.allPostViews[targetID.toString()]
 		targetView.model.set('header', headerText)
 		targetView.model.set('content', contentText)
@@ -105,6 +102,5 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		this.$('body').on('click', this.addPostItHandler)
 		this.allPostModels.on('add', this.addPostIt, this)
 		this.allPostModels.on('remove', this.removePostIt, this)
-		// this.allPostModels.on('change', this.updatePost, this)
 	}
 })
