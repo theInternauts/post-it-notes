@@ -34,9 +34,9 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 	},
 	updatePostFromModel: function(post_model){
 		console.log("View model: ", post_model)
-		this.$('.header').text(post_model.get('header'))
+		this.$('.header-label').text(post_model.get('header'))
 		this.$('.content').html(post_model.get('content'))
-	},
+	},	
 	initialize: function(){
 		console.log(this.model.get('id'))
 		this.model.on('change', this.updatePostFromModel, this)
@@ -46,9 +46,11 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 PostBoard.Views.MainBoard = Backbone.View.extend({
 	events: {
     	'click body': 'addPostItHandler',
-    	'click .post-it>.header': 'setFocus',
+    	'click .post-it>.header>.header-label': 'setFocus',
     	'click .post-it>.content': 'setFocus',
-    	'click .post-it>.header>a': 'removePostItHandler'
+    	'click .post-it>.header>a': 'removePostItHandler',
+    	'blur .post-it>.header>.header-label': 'updatePostHandler',
+    	'blur .post-it>.content': 'updatePostHandler'
 	},
 	render: function(){
 		this.setElement('html')
@@ -71,7 +73,7 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		!post_model.get('position') ? post_model.set('position') = { top: 50, left: 50 } : null
 		var newView = new PostBoard.Views.PostItView({ model: post_model })
 		this.allPostViews[post_model.get('id')] = newView;
-		this.$('body').append(newView.render().$el.css(post_model.get('position')).attr('id',post_model.get('id')).draggable({ handle: '.header'}))
+		this.$('body').append(newView.render().$el.css(post_model.get('position')).attr('id',post_model.get('id')).draggable({ handle: '.header-label'}))
 		return this
 	},
 	removePostIt: function(post_model){
@@ -87,8 +89,15 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		targets = this.allPostModels.where({ id: targetID })
 		this.allPostModels.remove(targets)
 	},
-	updatePost: function(post_model){
-		console.log("collection model: ", post_model)
+	updatePostHandler: function(event){
+		var targetID = $(event.target).parents('.post-it').attr('id')
+		console.log("DOM to model: ", targetID)
+		var headerText = this.$('#' + targetID + ' .header-label').text()
+		var contentText = this.$('#' + targetID	+ ' .content').html()
+		console.log("headerText: ", headerText, "contentText: ", contentText)
+		var targetView = this.allPostViews[targetID.toString()]
+		targetView.model.set('header', headerText)
+		targetView.model.set('content', contentText)
 	},
 	initialize: function(){
 		this.allPostModels = new PostBoard.Collections.PostItCollection()
