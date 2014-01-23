@@ -49,7 +49,8 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
     	'click .post-it>.content': 'setFocus',
     	'click .post-it>.header>a': 'removePostItHandler',
     	'blur .post-it>.header>.header-label': 'updatePostHandler',
-    	'blur .post-it>.content': 'updatePostHandler'
+    	'blur .post-it>.content': 'updatePostHandler',
+    	'dragstop .post-it': 'updatePostPositionHandler'
 	},
 	render: function(){
 		this.setElement('html')
@@ -72,7 +73,7 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		!post_model.get('position') ? post_model.set('position') = { top: 50, left: 50 } : null
 		var newView = new PostBoard.Views.PostItView({ model: post_model })
 		this.allPostViews[post_model.get('id')] = newView;
-		this.$('body').append(newView.render().$el.css(post_model.get('position')).attr('id',post_model.get('id')).draggable({ handle: '.header-label'}))
+		this.$('body').append(newView.render().$el.css(post_model.get('position')).attr('id',post_model.get('id')).draggable({ handle: '.header-label' }))
 		return this
 	},
 	removePostIt: function(post_model){
@@ -95,6 +96,17 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		var targetView = this.allPostViews[targetID.toString()]
 		targetView.model.set('header', headerText)
 		targetView.model.set('content', contentText)
+	},
+	updatePostPositionHandler: function(event){
+		console.log("position: ", event.target)
+		newPosition = {}
+		newPosition.top = $(event.target).cssUnit('top')[0]
+		newPosition.left = $(event.target).cssUnit('left')[0]
+		console.log("NP: ", newPosition)
+		var targetID = $(event.target).attr('id')
+		console.log("targetID: ", targetID)
+		var targetView = this.allPostViews[targetID.toString()]
+		targetView.model.set('position', newPosition)
 	},
 	initialize: function(){
 		this.allPostModels = new PostBoard.Collections.PostItCollection()
