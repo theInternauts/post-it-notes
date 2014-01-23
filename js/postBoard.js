@@ -68,21 +68,25 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		this.$('body').append(newView.render().$el.css(post_model.get('position')).attr('id',post_model.get('id')).draggable({ handle: '.header'}))
 		return this
 	},
-	removePostItByID: function(id){
-		console.log('#'+id)
-		this.$('#'+id).draggable('destroy').remove()
-		targets = this.allPostModels.where({ id: id })
-		this.allPostModels.remove(targets)
+	removePostIt: function(post_model){
+		var id = post_model.get('id')
+		console.log('#'+ id)
+		this.$('#'+id).draggable('destroy')
+		this.allPostViews[id].remove()
+		delete this.allPostViews[id]
 	},
 	removePostItHandler: function(event){
 		event.stopPropagation()
-		this.removePostItByID($(event.target).parents('.post-it').attr('id'))
+		var targetID = $(event.target).parents('.post-it').attr('id')
+		targets = this.allPostModels.where({ id: targetID })
+		this.allPostModels.remove(targets)
 	},
 	initialize: function(){
 		this.allPostModels = new PostBoard.Collections.PostItCollection()
 		this.allPostViews = {}
 		this.$('body').on('click', this.addPostItHandler)
 		this.allPostModels.on('add', this.addPostIt, this)
+		this.allPostModels.on('remove', this.removePostIt, this)
 	}
 })
 
