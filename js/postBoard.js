@@ -32,9 +32,15 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 		})
 		return this
 	},
+	updatePostFromModel: function(post_model){
+		console.log("View model: ", post_model)
+		this.$('.header').text(post_model.get('header'))
+		this.$('.content').html(post_model.get('content'))
+	},
 	initialize: function(){
 		console.log(this.model.get('id'))
-	}
+		this.model.on('change', this.updatePostFromModel, this)
+	},
 })
 
 PostBoard.Views.MainBoard = Backbone.View.extend({
@@ -81,11 +87,15 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		targets = this.allPostModels.where({ id: targetID })
 		this.allPostModels.remove(targets)
 	},
+	updatePost: function(post_model){
+		console.log("collection model: ", post_model)
+	},
 	initialize: function(){
 		this.allPostModels = new PostBoard.Collections.PostItCollection()
 		this.allPostViews = {}
 		this.$('body').on('click', this.addPostItHandler)
 		this.allPostModels.on('add', this.addPostIt, this)
 		this.allPostModels.on('remove', this.removePostIt, this)
+		// this.allPostModels.on('change', this.updatePost, this)
 	}
 })
