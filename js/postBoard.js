@@ -35,11 +35,7 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 	updatePostFromModel: function(post_model){
 		this.$('.header-label').text(post_model.get('header'))
 		this.$('.content').html(post_model.get('content'))
-		before = this.$el
-		console.log("selected: ", before )
-		this.$el.css(post_model.get('position'))
-		after = this.$el
-		console.log("selected: ", after )
+		this.$el.css(post_model.get('position'))		
 	},	
 	initialize: function(){
 		console.log(this.model.get('id'))
@@ -104,13 +100,10 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 	},
 	updatePostPositionHandler: function(event){
 		var target = $(event.target)
-		console.log("position: ", target)
 		newPosition = {}
 		newPosition.top = target.cssUnit('top')[0]
 		newPosition.left = target.cssUnit('left')[0]
-		console.log("NP: ", newPosition)
 		var targetID = target.attr('id')
-		console.log("targetID: ", targetID)
 		var targetView = this.allPostViews[targetID.toString()]
 		targetView.model.set('position', newPosition)
 	},
@@ -122,5 +115,3 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		this.allPostModels.on('remove', this.removePostIt, this)
 	}
 })
-
-var before,after
