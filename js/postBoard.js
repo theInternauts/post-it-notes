@@ -89,5 +89,3 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		this.allPostModels.on('remove', this.removePostIt, this)
 	}
 })
-
-my_item = null
