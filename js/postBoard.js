@@ -23,13 +23,13 @@ PostBoard.Views.Toolbar = Backbone.View.extend({
 })
 
 PostBoard.Views.PostItView = Backbone.View.extend({
+	attributes: { 
+		class: 'post-it',
+		style: 'display:block'
+	},
 	template: _.template('<div class=><div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
 	render: function () {
 	    this.$el.html(this.template(this.model))
-	    this.$el.attr({ 
-	    	'class': 'post-it',
-	    	'display': 'block'
-		})
 		return this
 	},
 	updatePostFromModel: function(post_model){
