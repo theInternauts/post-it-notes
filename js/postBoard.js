@@ -74,8 +74,7 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 PostBoard.Views.MainBoard = Backbone.View.extend({
 	events: {
     	'click body': 'addPostItHandler',
-    	'click .post-it>.header>a': 'removePostItHandler',
-    	// 'dragstop .post-it': 'updatePostPositionHandler'
+    	'click .post-it .header a': 'removePostItHandler'
 	},
 	defaultPosition: {
 		top: 50,
