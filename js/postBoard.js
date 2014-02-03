@@ -114,15 +114,6 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		targets = this.allPostModels.where({ id: targetID })
 		this.allPostModels.remove(targets)
 	},
-	updatePostPositionHandler: function(event){
-		var target = $(event.target)
-		newPosition = {}
-		newPosition.top = target.cssUnit('top')[0]
-		newPosition.left = target.cssUnit('left')[0]
-		var targetID = target.attr('id')
-		var targetView = this.allPostViews[targetID.toString()]
-		targetView.model.set('position', newPosition)
-	},
 	initialize: function(){
 		this.allPostModels = new PostBoard.Collections.PostItCollection()
 		this.allPostViews = {}
