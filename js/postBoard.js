@@ -42,7 +42,8 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 		'click .header-label' : 'setFocus',
 		'blur .content' : 'updatePostHandler',
 		'blur .header-label' : 'updatePostHandler',
-    	'dragstop': 'updatePostPositionHandler'
+    	'dragstop': 'updatePostPositionHandler',
+    	'click .header a': 'removePostItHandler'
 	},	
 	initialize: function(){
 		console.log(this.model.get('id'))
@@ -68,13 +69,18 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 		var targetID = target.attr('id')
 		// var targetView = this.allPostViews[targetID.toString()]
 		this.model.set('position', newPosition)
+	},
+	removePostItHandler: function(event){
+		event.stopPropagation()
+		var targetID = $(event.target).parents('.post-it').attr('id')
+		targets = this.collection.where({ id: targetID })
+		this.collection.remove(targets)
 	}
 })
 
 PostBoard.Views.MainBoard = Backbone.View.extend({
 	events: {
-    	'click body': 'addPostItHandler',
-    	'click .post-it .header a': 'removePostItHandler'
+    	'click body': 'addPostItHandler'
 	},
 	defaultPosition: {
 		top: 50,
@@ -95,7 +101,7 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		var post_model = post_model
 		!post_model.get('id') ? post_model.set('id', Date.now().toString()) : null
 		!post_model.get('position') ? post_model.set('position', this.defaultPosition) : null
-		var newView = new PostBoard.Views.PostItView({ model: post_model })
+		var newView = new PostBoard.Views.PostItView({ model: post_model, collection: this.allPostModels })
 		this.allPostViews[post_model.get('id')] = newView;
 		this.$('body').append(newView.render().$el.css(post_model.get('position')).attr('id',post_model.get('id')).draggable({ handle: '.header-label' }))
 		return this
@@ -106,12 +112,6 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		this.$('#'+id).draggable('destroy')
 		this.allPostViews[id].remove()
 		delete this.allPostViews[id]
-	},
-	removePostItHandler: function(event){
-		event.stopPropagation()
-		var targetID = $(event.target).parents('.post-it').attr('id')
-		targets = this.allPostModels.where({ id: targetID })
-		this.allPostModels.remove(targets)
 	},
 	initialize: function(){
 		this.allPostModels = new PostBoard.Collections.PostItCollection()
