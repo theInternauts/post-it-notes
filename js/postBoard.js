@@ -52,11 +52,9 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 		this.$(event.target).focus()
 	},
 	updatePostHandler: function(event){
-		target = this
-		console.log("updating", target)
-		targetID = $(event.target).parents('.post-it').attr('id')
-		headerText = this.$('.header-label').text()
-		contentText = this.$('.content').html()
+		var targetID = $(event.target).parents('.post-it').attr('id')
+		var headerText = this.$('.header-label').text()
+		var contentText = this.$('.content').html()
 		// var targetView = this.allPostViews[targetID.toString()]
 		this.model.set('header', headerText)
 		this.model.set('content', contentText)
