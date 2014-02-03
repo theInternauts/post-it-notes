@@ -23,7 +23,7 @@ PostBoard.Views.Toolbar = Backbone.View.extend({
 })
 
 PostBoard.Views.PostItView = Backbone.View.extend({
-	template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
+	template: _.template('<div class=><div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
 	render: function () {
 	    this.$el.html(this.template(this.model))
 	    this.$el.attr({ 
@@ -41,7 +41,8 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 		'click .content' : 'setFocus',
 		'click .header-label' : 'setFocus',
 		'blur .content' : 'updatePostHandler',
-		'blur .header-label' : 'updatePostHandler'
+		'blur .header-label' : 'updatePostHandler',
+    	'dragstop': 'updatePostPositionHandler'
 	},	
 	initialize: function(){
 		console.log(this.model.get('id'))
@@ -58,6 +59,15 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 		// var targetView = this.allPostViews[targetID.toString()]
 		this.model.set('header', headerText)
 		this.model.set('content', contentText)
+	},
+	updatePostPositionHandler: function(event){
+		var target = $(event.target)
+		newPosition = {}
+		newPosition.top = target.cssUnit('top')[0]
+		newPosition.left = target.cssUnit('left')[0]
+		var targetID = target.attr('id')
+		// var targetView = this.allPostViews[targetID.toString()]
+		this.model.set('position', newPosition)
 	}
 })
 
@@ -65,7 +75,7 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 	events: {
     	'click body': 'addPostItHandler',
     	'click .post-it>.header>a': 'removePostItHandler',
-    	'dragstop .post-it': 'updatePostPositionHandler'
+    	// 'dragstop .post-it': 'updatePostPositionHandler'
 	},
 	defaultPosition: {
 		top: 50,
