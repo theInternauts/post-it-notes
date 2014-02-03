@@ -83,7 +83,6 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
     	this.allPostModels.add(new PostBoard.Models.PostIt({ id: event.timeStamp.toString(), position: position }))
 	},
 	addPostIt: function(post_model){
-		console.log('adding')
 		var post_model = post_model
 		!post_model.get('id') ? post_model.set('id', Date.now().toString()) : null
 		!post_model.get('position') ? post_model.set('position', this.defaultPosition) : null
