@@ -7,7 +7,7 @@ PostBoard.Models.PostIt = Backbone.Model.extend({})
 PostBoard.Collections.PostItCollection = Backbone.Collection.extend({
 	model: PostBoard.Models.PostIt
 })
-
+ 
 //Views
 PostBoard.Views.Toolbar = Backbone.View.extend({
 	template: _.template('<ul><li><a href="#" id="btn-new-group">Create Group</a></li></ul>'),
