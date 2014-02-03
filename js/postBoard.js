@@ -10,16 +10,15 @@ PostBoard.Collections.PostItCollection = Backbone.Collection.extend({
 
 //Views
 PostBoard.Views.Toolbar = Backbone.View.extend({
+	attributes: { id: 'main-toolbar' },
 	template: _.template('<ul><li><a href="#" id="btn-new-group">Create Group</a></li></ul>'),
 	render: function () {
 	    this.$el.html(this.template(this.model))
-	    this.$el.attr('id', 'main-toolbar')
 		return this
 	},
 	events: {
     	'dblclick ul': 'test'
-	}
-	
+	}	
 })
 
 PostBoard.Views.PostItView = Backbone.View.extend({
