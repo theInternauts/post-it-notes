@@ -39,7 +39,9 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 	},
 	events: {
 		'click .content' : 'setFocus',
-		'click .header-label' : 'setFocus'
+		'click .header-label' : 'setFocus',
+		'blur .content' : 'updatePostHandler',
+		'blur .header-label' : 'updatePostHandler'
 	},	
 	initialize: function(){
 		console.log(this.model.get('id'))
@@ -48,6 +50,16 @@ PostBoard.Views.PostItView = Backbone.View.extend({
 	setFocus: function(event){
 		event.stopPropagation()
 		this.$(event.target).focus()
+	},
+	updatePostHandler: function(event){
+		target = this
+		console.log("updating", target)
+		targetID = $(event.target).parents('.post-it').attr('id')
+		headerText = this.$('.header-label').text()
+		contentText = this.$('.content').html()
+		// var targetView = this.allPostViews[targetID.toString()]
+		this.model.set('header', headerText)
+		this.model.set('content', contentText)
 	}
 })
 
@@ -55,8 +67,6 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 	events: {
     	'click body': 'addPostItHandler',
     	'click .post-it>.header>a': 'removePostItHandler',
-    	'blur .post-it>.header>.header-label': 'updatePostHandler',
-    	'blur .post-it>.content': 'updatePostHandler',
     	'dragstop .post-it': 'updatePostPositionHandler'
 	},
 	defaultPosition: {
@@ -96,14 +106,6 @@ PostBoard.Views.MainBoard = Backbone.View.extend({
 		var targetID = $(event.target).parents('.post-it').attr('id')
 		targets = this.allPostModels.where({ id: targetID })
 		this.allPostModels.remove(targets)
-	},
-	updatePostHandler: function(event){
-		var targetID = $(event.target).parents('.post-it').attr('id')
-		var headerText = this.$('#' + targetID + ' .header-label').text()
-		var contentText = this.$('#' + targetID	+ ' .content').html()
-		var targetView = this.allPostViews[targetID.toString()]
-		targetView.model.set('header', headerText)
-		targetView.model.set('content', contentText)
 	},
 	updatePostPositionHandler: function(event){
 		var target = $(event.target)
