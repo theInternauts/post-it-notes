@@ -24,21 +24,21 @@
 .post-it-group {
   position: absolute !important;
   width: 190px;
-  box-shadow: inset 0px 2px 8px #887B5D;
+  box-shadow: inset 0px 2px 8px #5B7072;
   overflow: hidden;
   border-radius: 7px;
   z-index: 1000;
 }
 
 .post-it-group .header {
-  background-color: #928465;
+  background-color: #95a5a6;
   text-align: right;
   padding: 2px;
   width: 100%;
 }
 
 .post-it-group .header:hover {
-  background-color: #a8a860;
+  background-color: #2980b9;
 }
 
 .post-it-group .header a, .post-it-group .header a:visited {
