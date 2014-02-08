@@ -1,4 +1,5 @@
 define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
+	g = new PostBoard.Views.PostItGroupView()
 	PostBoard.Views.MainBoard = Backbone.View.extend({
 		events: {
 	    	'click body': 'addPostItHandler'
@@ -10,7 +11,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		render: function(){
 			this.setElement('html')
 			this.$('body').attr('id', 'board')
-			this.$('body').append(new PostBoard.Views.Toolbar().render().el)
+			this.$('body').append(this.toolbar.render().el)
 			return this
 		},
 		addPostItHandler: function(event){
@@ -35,6 +36,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			delete this.allPostViews[id]
 		},
 		initialize: function(){
+			this.toolbar = new PostBoard.Views.Toolbar()
 			this.allPostModels = new PostBoard.Collections.PostItCollection()
 			this.allPostViews = {}
 			this.$('body').on('click', this.addPostItHandler)
