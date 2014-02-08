@@ -1,5 +1,4 @@
 define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
-	g = new PostBoard.Views.PostItGroupView()
 	PostBoard.Views.MainBoard = Backbone.View.extend({
 		events: {
 	    	'click body': 'addPostItHandler'
