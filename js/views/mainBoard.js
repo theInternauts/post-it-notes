@@ -38,6 +38,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		initialize: function(){
 			this.toolbar = new PostBoard.Views.Toolbar()
 			this.allPostModels = new PostBoard.Collections.PostItCollection()
+			this.allPostGroupModels = new PostBoard.Collections.PostItGroupCollection()
 			this.allPostViews = {}
 			this.$('body').on('click', this.addPostItHandler)
 			this.allPostModels.on('add', this.addPostIt, this)
