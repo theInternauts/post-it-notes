@@ -8,6 +8,9 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		render: function () {
 		    this.$el.html(this.template(this.model))
 			return this
+		},
+		initialize: function () {
+			this.collection = Backbone.Collection.extend({})			
 		}		
 	})
 	
