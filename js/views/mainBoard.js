@@ -35,6 +35,10 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.allPostViews[id].remove()
 			delete this.allPostViews[id]
 		},
+		addGroupHandler: function(event){
+			event.stopPropagation()
+			this.allPostGroupModels.add(new PostBoard.Models.PostItGroup({ 'header': '', id: event.timeStamp.toString(), position: this.defaultPosition }))
+		},
 		initialize: function(){
 			this.toolbar = new PostBoard.Views.Toolbar()
 			this.allPostModels = new PostBoard.Collections.PostItCollection()
@@ -43,6 +47,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.$('body').on('click', this.addPostItHandler)
 			this.allPostModels.on('add', this.addPostIt, this)
 			this.allPostModels.on('remove', this.removePostIt, this)
+			this.listenTo(this.toolbar, 'clickGroupAdd', this.addGroupHandler)
 		}
 	})
 
