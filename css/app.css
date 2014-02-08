@@ -28,6 +28,7 @@
   overflow: hidden;
   border-radius: 7px;
   z-index: 1000;
+  background-color: #7f8c8d;
 }
 
 .post-it-group .header {
