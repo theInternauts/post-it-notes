@@ -4,8 +4,8 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 	    	'click body': 'addPostItHandler'
 		},
 		defaultPosition: {
-			top: 50,
-			left: 50
+			top: 72,
+			left: 20
 		},
 		render: function(){
 			this.setElement('html')
@@ -19,8 +19,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 	    	this.allPostModels.add(new PostBoard.Models.PostIt({ id: event.timeStamp.toString(), position: position }))
 		},
 		addPostIt: function(post_model){
-			var post_model = post_model
-			!post_model.get('id') ? post_model.set('id', Date.now().toString()) : null
+			var post_model = post_model			
 			!post_model.get('position') ? post_model.set('position', this.defaultPosition) : null
 			var newView = new PostBoard.Views.PostItView({ model: post_model, collection: this.allPostModels })
 			this.allPostViews[post_model.get('id')] = newView;
@@ -39,9 +38,10 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.allPostGroupModels.add(new PostBoard.Models.PostItGroup({ 'header': '', id: event.timeStamp.toString(), position: this.defaultPosition }))
 		},
 		addPostItGroup: function(group_model){
-			newGroupView = new PostBoard.Views.PostItGroupView({ model: group_model })
-			console.log('group_model.collection: ', group_model.collection)
-			this.$('body').append(newGroupView.render().$el)
+			var group_model = group_model
+			!group_model.get('position') ? group_model.set('position', this.defaultPosition) : null
+			var newGroupView = new PostBoard.Views.PostItGroupView({ model: group_model })
+			this.$('body').append(newGroupView.render().$el.css(group_model.get('position')).attr('id',group_model.get('id')).draggable({ handle: '.header-label' }))
 		},
 		initialize: function(){
 			this.toolbar = new PostBoard.Views.Toolbar()
