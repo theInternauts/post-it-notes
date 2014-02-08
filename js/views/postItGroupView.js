@@ -10,7 +10,9 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			return this
 		},
 		initialize: function () {
-			this.collection = Backbone.Collection.extend({})			
+			this.collection = Backbone.Collection.extend({
+				model: PostBoard.Views.PostIt
+			})			
 		}		
 	})
 	
