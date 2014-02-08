@@ -2,16 +2,12 @@ define( ['PostBoard', 'underscore', 'backbone'], function ( PostBoard, _, Backbo
 	PostBoard.Models.PostItGroup = Backbone.Model.extend({
 		defaults: { 
 			header: '',
-			id: Date.now().toString(),
-			position: {
-				top: 50,
-				left: 50
-			},
-			initialize: function(){
-				this.collection = new Backbone.Collection.extend({
-					model: PostBoard.Models.PostIt
-				})			
-			}
+			id: Date.now().toString()
+		},
+		initialize: function(){
+			this.collection = new Backbone.Collection.extend({
+				model: PostBoard.Models.PostIt
+			})			
 		}
 	})
 
