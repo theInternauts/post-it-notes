@@ -39,6 +39,11 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			event.stopPropagation()
 			this.allPostGroupModels.add(new PostBoard.Models.PostItGroup({ 'header': '', id: event.timeStamp.toString(), position: this.defaultPosition }))
 		},
+		addPostItGroup: function(group_model){
+			newGroupView = new PostBoard.Views.PostItGroupView({ model: group_model })
+			console.log('group_model.collection: ', group_model.collection)
+			this.$('body').append(newGroupView.render().$el)
+		},
 		initialize: function(){
 			this.toolbar = new PostBoard.Views.Toolbar()
 			this.allPostModels = new PostBoard.Collections.PostItCollection()
@@ -48,6 +53,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.allPostModels.on('add', this.addPostIt, this)
 			this.allPostModels.on('remove', this.removePostIt, this)
 			this.listenTo(this.toolbar, 'clickGroupAdd', this.addGroupHandler)
+			this.allPostGroupModels.on('add', this.addPostItGroup, this)
 		}
 	})
 
