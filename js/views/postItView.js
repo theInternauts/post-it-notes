@@ -1,8 +1,8 @@
 define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
 	PostBoard.Views.PostItView = Backbone.View.extend({
-		attributes: { 
+		attributes: {
 			class: 'post-it',
-			style: 'display:block'
+			style: 'display:block;position:absolute;'
 		},
 		template: _.template('<div class=><div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
 		render: function () {
@@ -12,7 +12,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		updatePostFromModel: function(post_model){
 			this.$('.header-label').text(post_model.get('header'))
 			this.$('.content').html(post_model.get('content'))
-			this.$el.css(post_model.get('position'))		
+			this.$el.css(post_model.get('position'))
 		},
 		events: {
 			'click .content' : 'setFocus',
@@ -21,7 +21,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			'blur .header-label' : 'updatePostHandler',
 	    	'dragstop': 'updatePostPositionHandler',
 	    	'click .header a': 'removePostItHandler'
-		},	
+		},
 		initialize: function(){
 			console.log(this.model.get('id'))
 			this.model.on('change', this.updatePostFromModel, this)
@@ -52,8 +52,8 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			var targetID = $(event.target).parents('.post-it').attr('id')
 			targets = this.collection.where({ id: targetID })
 			this.collection.remove(targets)
-		}		
+		}
 	})
-	
+
 	return PostBoard.Views.PostItView
 })
