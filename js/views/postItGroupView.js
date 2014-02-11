@@ -11,14 +11,15 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		    	accept: '.post-it',
 		    	snap: 'div',
 		    	snapMode: 'outer',
-		    	drop: function(event, ui){
-		    		console.log(event, ui)
-		    		ui_node = ui.draggable.css({ 'position':'static', 'margin':'0 auto 10px auto'})
-		    		$(event.target).append(ui_node)
-		    	}
+		    	drop: this.postItDropHandler
 		    })
 			return this
-		}
+		},
+		postItDropHandler: function(event, ui){
+  		console.log(event, ui)
+  		ui_node = ui.draggable.css({ 'position':'static', 'margin':'0 auto 10px auto'})
+  		$(event.target).append(ui_node)
+  	}
 	})
 
 	return PostBoard.Views.PostItGroupView
