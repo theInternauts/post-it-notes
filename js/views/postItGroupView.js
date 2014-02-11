@@ -1,4 +1,4 @@
-define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
+define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCollection', 'views/postItView', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
 	PostBoard.Views.PostItGroupView = Backbone.View.extend({
 		attributes: {
 			class: 'post-it-group',
@@ -10,15 +10,25 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		    this.$el.children('.content').droppable({
 		    	accept: '.post-it',
 		    	snap: 'div',
-		    	snapMode: 'outer',
+		    	snapMode: 'inner',
 		    	drop: this.postItDropHandler
 		    })
 			return this
 		},
 		postItDropHandler: function(event, ui){
-  		console.log(event, ui)
-  		ui_node = ui.draggable.css({ 'position':'static', 'margin':'0 auto 10px auto'})
+			var ui_node = ui.draggable.css({ 'position':'static', 'margin':'0 auto 10px auto' })
   		$(event.target).append(ui_node)
+  	},
+  	addPostItViewToGroup: function(post_model){
+  		console.log("ADD")
+  		var new_post = new PostBoard.Views.PostItView({ model: post_model})
+  		new_post.render().$el.css({ 'position':'static', 'margin':'0 auto 10px auto'})
+  		this.$el.append(new_post.el)
+  	},
+  	initialize: function(){
+  		// !this.collection ? this.collection = new PostBoard.Collections.PostItCollection() : null
+  		my_model = this.model
+  		// this.model.collection.on('add', this.addPostItViewToGroup, this)
   	}
 	})
 
