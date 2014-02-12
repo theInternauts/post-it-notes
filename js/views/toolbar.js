@@ -10,7 +10,7 @@ define( ['PostBoard', 'backbone'], function ( PostBoard, Backbone ) {
 	    	'click ul a': 'addGroupHandler'
 		},
 		addGroupHandler: function(event) {
-			this.trigger("clickGroupAdd", event)
+			PostBoard.Events.trigger("clickGroupAdd", event)
 		}	
 	})
 
