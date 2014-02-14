@@ -19,7 +19,10 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 			var ui_node = ui.draggable
 			ui_node.css({ 'position':'static', 'margin':'0 auto 10px auto' })
 	  		$(event.target).append(ui_node)
-	  		PostBoard.Events.trigger('group:newPostItDrop', { id: ui_node.attr('id') })
+	  		PostBoard.Events.trigger('group:postItDropped', { id: ui_node.attr('id') })
+	  	},
+	  	postItDropUpdate: function(data){
+	  		console.log("group:update: ", data)
 	  	},
 	  	addPostItViewToGroup: function(post_model){
 	  		console.log("ADD")
@@ -31,6 +34,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 	  		// !this.collection ? this.collection = new PostBoard.Collections.PostItCollection() : null
 	  		var my_model = this.model
 	  		// this.model.collection.on('add', this.addPostItViewToGroup, this)
+	  		PostBoard.Events.on('group:broadcastingPostIt', this.postItDropUpdate, this)
 	  	}
 	})
 
