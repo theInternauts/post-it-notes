@@ -16,8 +16,10 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 			return this
 		},
 		postItDropHandler: function(event, ui){
-			 ui_node = ui.draggable.css({ 'position':'static', 'margin':'0 auto 10px auto' })
+			var ui_node = ui.draggable
+			ui_node.css({ 'position':'static', 'margin':'0 auto 10px auto' })
 	  		$(event.target).append(ui_node)
+	  		PostBoard.Events.trigger('group:newPostItDrop', { id: ui_node.attr('id') })
 	  	},
 	  	addPostItViewToGroup: function(post_model){
 	  		console.log("ADD")
