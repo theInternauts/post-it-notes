@@ -55,7 +55,9 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.collection.remove(targets)
 		},
 		groupDropHandler: function(data){
-			PostBoard.Events.trigger('group:broadcastingPostIt', { view: this })
+			if (this.model.get('id') == data.id){				
+				PostBoard.Events.trigger('group:broadcastingPostIt', { view: this })
+			}
 		}
 	})
 
