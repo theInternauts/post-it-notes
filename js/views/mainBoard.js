@@ -43,6 +43,9 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			var newGroupView = new PostBoard.Views.PostItGroupView({ model: group_model })
 			this.$('body').append(newGroupView.render().$el.css(group_model.get('position')).attr('id',group_model.get('id')).draggable({ handle: '.header-label' }))
 		},
+		removeDroppedPostItModel: function(data){
+			this.allPostModels.remove(data.view.model, { silent: true })
+		},
 		initialize: function(){
 			this.toolbar = new PostBoard.Views.Toolbar()
 			this.allPostModels = new PostBoard.Collections.PostItCollection()
@@ -53,6 +56,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.allPostModels.on('remove', this.removePostIt, this)
 			PostBoard.Events.on('clickGroupAdd', this.addGroupHandler, this)
 			this.allPostGroupModels.on('add', this.addPostItGroup, this)
+			PostBoard.Events.on('group:broadcastingPostIt', this.removeDroppedPostItModel, this)
 		}
 	})
 
