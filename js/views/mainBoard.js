@@ -28,8 +28,8 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		},
 		removePostIt: function(post_model){
 			var id = post_model.get('id')
-			console.log('#'+ id)
-			this.$('#'+id).draggable('destroy')
+			console.log('#' + id)
+			this.$('#' + id).draggable('destroy')
 			this.allPostViews[id].remove()
 			delete this.allPostViews[id]
 		},
@@ -41,24 +41,36 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			var group_model = group_model
 			!group_model.get('position') ? group_model.set('position', this.defaultPosition) : null
 			var newGroupView = new PostBoard.Views.PostItGroupView({ model: group_model })
-			this.allGroupViews[group_model.get('id')] = newGroupView
+			this.allPostGroupViews[group_model.get('id')] = newGroupView
 			this.$('body').append(newGroupView.render().$el.css(group_model.get('position')).attr('id',group_model.get('id')).draggable({ handle: '.header-label' }))
 		},
 		removeDroppedPostItModel: function(data){
 			this.allPostModels.remove(data.view.model, { silent: true })
+		},
+		removeGroupHandler: function(data){
+			this.allPostGroupModels.remove(data.view.model)
+		},
+		removeGroup: function(group_model){
+			var id = group_model.get('id')
+			console.log('#group: '+ id)
+			this.$('#' + id).draggable('destroy')
+			this.allPostGroupViews[id].remove()
+			delete this.allPostGroupViews[id]
 		},
 		initialize: function(){
 			this.toolbar = new PostBoard.Views.Toolbar()
 			this.allPostModels = new PostBoard.Collections.PostItCollection()
 			this.allPostGroupModels = new PostBoard.Collections.PostItGroupCollection()
 			this.allPostViews = {}
-			this.allGroupViews = {}
+			this.allPostGroupViews = {}
 			this.$('body').on('click', this.addPostItHandler)
 			this.allPostModels.on('add', this.addPostIt, this)
 			this.allPostModels.on('remove', this.removePostIt, this)
 			PostBoard.Events.on('clickGroupAdd', this.addGroupHandler, this)
 			this.allPostGroupModels.on('add', this.addPostItGroup, this)
+			this.allPostGroupModels.on('remove', this.removeGroup, this)
 			PostBoard.Events.on('group:broadcastingPostIt', this.removeDroppedPostItModel, this)
+			PostBoard.Events.on('group:broadcastingDestroy', this.removeGroupHandler, this)
 		}
 	})
 

@@ -8,6 +8,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 			'click .header-label' : 'setFocus',
 			'blur .header-label' : 'updateGroupHandler',
 			'dragstop': 'updateGroupPositionHandler',
+			'click .header a': 'removePostGroupItHandler'
 		},
 		template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content"></div>'),
 		render: function () {
@@ -41,6 +42,14 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 			var targetID = target.attr('id')
 			this.model.set('position', newPosition)
 		},
+		removePostGroupItHandler: function(event){
+			event.stopPropagation()
+			var targetID = $(event.target).parents('.post-it-group').attr('id')
+			my_view = this
+			PostBoard.Events.trigger('group:broadcastingDestroy', { gid: targetID, view: this })
+			// targets = this.collection.where({ id: targetID })
+			// this.collection.remove(targets)
+		},
 		postItDropHandler: function(event, ui){
 			//'this' in this scope is a DOM element NOT the VIEW
 			var ui_node = ui.draggable
@@ -58,7 +67,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 	  		}
 	  	},
 	  	initialize: function(){
-	  		console.log("group-" + this.model.get('id'))
+	  		console.log("group: " + this.model.get('id'))
 	  		!this.collection ? this.collection = new PostBoard.Collections.PostItCollection() : null
 			this.model.on('change', this.updateGroupFromModel, this)
 	  		PostBoard.Events.on('group:broadcastingPostIt', this.postItDropUpdate, this)
