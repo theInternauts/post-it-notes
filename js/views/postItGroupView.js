@@ -6,7 +6,8 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 		},
 		events: {
 			'click .header-label' : 'setFocus',
-			'blur .header-label' : 'updateGroupHandler'
+			'blur .header-label' : 'updateGroupHandler',
+			'dragstop': 'updateGroupPositionHandler',
 		},
 		template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content"></div>'),
 		render: function () {
@@ -30,6 +31,15 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 		},
 		updateGroupFromModel: function(group_model){
 			this.$('.header-label').text(group_model.get('header'))
+			this.$el.css(group_model.get('position'))
+		},
+		updateGroupPositionHandler: function(event){
+			var target = $(event.target)
+			var newPosition = {}
+			newPosition.top = target.cssUnit('top')[0]
+			newPosition.left = target.cssUnit('left')[0]
+			var targetID = target.attr('id')
+			this.model.set('position', newPosition)
 		},
 		postItDropHandler: function(event, ui){
 			//'this' in this scope is a DOM element NOT the VIEW
