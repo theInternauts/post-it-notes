@@ -22,7 +22,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			var post_model = post_model			
 			!post_model.get('position') ? post_model.set('position', this.defaultPosition) : null
 			var newView = new PostBoard.Views.PostItView({ model: post_model, collection: this.allPostModels })
-			this.allPostViews[post_model.get('id')] = newView;
+			this.allPostViews[post_model.get('id')] = newView
 			this.$('body').append(newView.render().$el.css(post_model.get('position')).attr('id',post_model.get('id')).draggable({ handle: '.header-label' }))
 			return this
 		},
@@ -41,6 +41,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			var group_model = group_model
 			!group_model.get('position') ? group_model.set('position', this.defaultPosition) : null
 			var newGroupView = new PostBoard.Views.PostItGroupView({ model: group_model })
+			this.allGroupViews[group_model.get('id')] = newGroupView
 			this.$('body').append(newGroupView.render().$el.css(group_model.get('position')).attr('id',group_model.get('id')).draggable({ handle: '.header-label' }))
 		},
 		removeDroppedPostItModel: function(data){
@@ -51,6 +52,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.allPostModels = new PostBoard.Collections.PostItCollection()
 			this.allPostGroupModels = new PostBoard.Collections.PostItGroupCollection()
 			this.allPostViews = {}
+			this.allGroupViews = {}
 			this.$('body').on('click', this.addPostItHandler)
 			this.allPostModels.on('add', this.addPostIt, this)
 			this.allPostModels.on('remove', this.removePostIt, this)
