@@ -33,7 +33,6 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 	  	},
 	  	initialize: function(){
 	  		!this.collection ? this.collection = new PostBoard.Collections.PostItCollection() : null
-	  		my_model = this.model
 	  		PostBoard.Events.on('group:broadcastingPostIt', this.postItDropUpdate, this)
 	  	}
 	})
