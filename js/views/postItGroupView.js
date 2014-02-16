@@ -5,7 +5,8 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 			style: 'display:block;position:absolute;'
 		},
 		events: {
-			'click .header-label' : 'setFocus'
+			'click .header-label' : 'setFocus',
+			'blur .header-label' : 'updateGroupHandler'
 		},
 		template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content"></div>'),
 		render: function () {
@@ -22,6 +23,13 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 		setFocus: function(event){
 			event.stopPropagation()
 			this.$(event.target).focus()
+		},
+		updateGroupHandler: function(event){
+			var headerText = this.$('.header-label').text()
+			this.model.set('header', headerText)
+		},
+		updateGroupFromModel: function(group_model){
+			this.$('.header-label').text(group_model.get('header'))
 		},
 		postItDropHandler: function(event, ui){
 			//'this' in this scope is a DOM element NOT the VIEW
@@ -40,7 +48,9 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 	  		}
 	  	},
 	  	initialize: function(){
+	  		console.log("group-" + this.model.get('id'))
 	  		!this.collection ? this.collection = new PostBoard.Collections.PostItCollection() : null
+			this.model.on('change', this.updateGroupFromModel, this)
 	  		PostBoard.Events.on('group:broadcastingPostIt', this.postItDropUpdate, this)
 	  	}
 	})
