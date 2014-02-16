@@ -45,10 +45,8 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 		removePostGroupItHandler: function(event){
 			event.stopPropagation()
 			var targetID = $(event.target).parents('.post-it-group').attr('id')
-			my_view = this
+			this.collection.reset()
 			PostBoard.Events.trigger('group:broadcastingDestroy', { gid: targetID, view: this })
-			// targets = this.collection.where({ id: targetID })
-			// this.collection.remove(targets)
 		},
 		postItDropHandler: function(event, ui){
 			//'this' in this scope is a DOM element NOT the VIEW
