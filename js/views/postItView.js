@@ -35,17 +35,15 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			var targetID = $(event.target).parents('.post-it').attr('id')
 			var headerText = this.$('.header-label').text()
 			var contentText = this.$('.content').html()
-			// var targetView = this.allPostViews[targetID.toString()]
 			this.model.set('header', headerText)
 			this.model.set('content', contentText)
 		},
 		updatePostPositionHandler: function(event){
 			var target = $(event.target)
-			newPosition = {}
+			var newPosition = {}
 			newPosition.top = target.cssUnit('top')[0]
 			newPosition.left = target.cssUnit('left')[0]
 			var targetID = target.attr('id')
-			// var targetView = this.allPostViews[targetID.toString()]
 			this.model.set('position', newPosition)
 		},
 		removePostItHandler: function(event){
@@ -55,8 +53,10 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.collection.remove(targets)
 		},
 		groupDropHandler: function(data){
-			if (this.model.get('id') == data.id){				
-				PostBoard.Events.trigger('group:broadcastingPostIt', { view: this })
+			if (this.model.get('id') == data.pid){
+				var response = { view: this }
+				_.extend(response, data)
+				PostBoard.Events.trigger('group:broadcastingPostIt', response)
 			}
 		}
 	})
