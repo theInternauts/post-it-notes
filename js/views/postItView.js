@@ -1,19 +1,5 @@
 define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
 	PostBoard.Views.PostItView = Backbone.View.extend({
-		attributes: {
-			class: 'post-it',
-			style: 'display:block;position:absolute;'
-		},
-		template: _.template('<div class=><div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
-		render: function () {
-		    this.$el.html(this.template(this.model))
-			return this
-		},
-		updatePostFromModel: function(post_model){
-			this.$('.header-label').text(post_model.get('header'))
-			this.$('.content').html(post_model.get('content'))
-			this.$el.css(post_model.get('position'))
-		},
 		events: {
 			'click .content' : 'setFocus',
 			'click .header-label' : 'setFocus',
@@ -22,14 +8,24 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 	    	'dragstop': 'updatePostPositionHandler',
 	    	'click .header a': 'removePostItHandler'
 		},
-		initialize: function(){
-			console.log(this.model.get('id'))
-			this.model.on('change', this.updatePostFromModel, this)
-			PostBoard.Events.on('group:postItAdded', this.groupDropHandler, this)
+		attributes: {
+			class: 'post-it',
+			style: 'display:block;position:absolute;'
+		},
+		template: _.template('<div class=><div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
+		render: function () {
+			this.$el.empty()
+		    this.$el.html(this.template(this.model))
+			return this
 		},
 		setFocus: function(event){
 			event.stopPropagation()
 			this.$(event.target).focus()
+		},
+		updatePostFromModel: function(post_model){
+			this.$('.header-label').text(post_model.get('header'))
+			this.$('.content').html(post_model.get('content'))
+			this.$el.css(post_model.get('position'))
 		},
 		updatePostHandler: function(event){
 			var targetID = $(event.target).parents('.post-it').attr('id')
@@ -49,7 +45,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		removePostItHandler: function(event){
 			event.stopPropagation()
 			var targetID = $(event.target).parents('.post-it').attr('id')
-			targets = this.collection.where({ id: targetID })
+			var targets = this.collection.where({ id: targetID })
 			this.collection.remove(targets)
 		},
 		groupDropHandler: function(data){
@@ -58,6 +54,11 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 				_.extend(response, data)
 				PostBoard.Events.trigger('group:broadcastingPostIt', response)
 			}
+		},
+		initialize: function(){
+			console.log(this.model.get('id'))
+			this.model.on('change', this.updatePostFromModel, this)
+			PostBoard.Events.on('group:postItAdded', this.groupDropHandler, this)
 		}
 	})
 
