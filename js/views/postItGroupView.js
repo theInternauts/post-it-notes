@@ -36,11 +36,13 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 		},
 		updateGroupPositionHandler: function(event){
 			var target = $(event.target)
-			var newPosition = {}
-			newPosition.top = target.cssUnit('top')[0]
-			newPosition.left = target.cssUnit('left')[0]
-			var targetID = target.attr('id')
-			this.model.set('position', newPosition)
+			if(target.hasClass('post-it-group')){
+				var newPosition = {}
+				newPosition.top = target.cssUnit('top')[0]
+				newPosition.left = target.cssUnit('left')[0]
+				var targetID = target.attr('id')
+				this.model.set('position', newPosition)				
+			}
 		},
 		removePostGroupItHandler: function(event){
 			event.stopPropagation()
