@@ -22,16 +22,11 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 	  		PostBoard.Events.trigger('group:postItAdded', { id: ui_node.attr('id') })
 	  	},
 	  	postItDropUpdate: function(data){
-	  		console.log("group:update: ", data)
-	  	},
-	  	addPostItViewToGroup: function(post_model){
-	  		console.log("ADD")
-	  		var new_post = new PostBoard.Views.PostItView({ model: post_model})
-	  		new_post.render().$el.css({ 'position':'static', 'margin':'0 auto 10px auto'})
-	  		this.$el.append(new_post.el)
+	  		console.log("group:update: ", data.view.model)
+	  		this.collection.add(data.view.model)
 	  	},
 	  	initialize: function(){
-	  		// !this.collection ? this.collection = new PostBoard.Collections.PostItCollection() : null
+	  		!this.collection ? this.collection = new PostBoard.Collections.PostItCollection() : null
 	  		var my_model = this.model
 	  		// this.model.collection.on('add', this.addPostItViewToGroup, this)
 	  		PostBoard.Events.on('group:broadcastingPostIt', this.postItDropUpdate, this)
