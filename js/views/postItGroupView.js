@@ -4,6 +4,9 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 			class: 'post-it-group',
 			style: 'display:block;position:absolute;'
 		},
+		events: {
+			'click .header-label' : 'setFocus'
+		},
 		template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content"></div>'),
 		render: function () {
 			this.$el.empty()
@@ -15,6 +18,10 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 		    	drop: this.postItDropHandler
 		    })
 			return this
+		},
+		setFocus: function(event){
+			event.stopPropagation()
+			this.$(event.target).focus()
 		},
 		postItDropHandler: function(event, ui){
 			//'this' in this scope is a DOM element NOT the VIEW
