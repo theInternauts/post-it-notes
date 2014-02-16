@@ -25,7 +25,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		initialize: function(){
 			console.log(this.model.get('id'))
 			this.model.on('change', this.updatePostFromModel, this)
-			PostBoard.Events.on('group:postItDropped', this.groupDropHandler, this)
+			PostBoard.Events.on('group:postItAdded', this.groupDropHandler, this)
 		},
 		setFocus: function(event){
 			event.stopPropagation()

@@ -19,7 +19,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 			var ui_node = ui.draggable
 			ui_node.css({ 'position':'static', 'margin':'0 auto 10px auto' })
 	  		$(event.target).append(ui_node)
-	  		PostBoard.Events.trigger('group:postItDropped', { id: ui_node.attr('id') })
+	  		PostBoard.Events.trigger('group:postItAdded', { id: ui_node.attr('id') })
 	  	},
 	  	postItDropUpdate: function(data){
 	  		console.log("group:update: ", data)
