@@ -28,7 +28,6 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.$el.css(post_model.get('position'))
 		},
 		updatePostHandler: function(event){
-			var targetID = $(event.target).parents('.post-it').attr('id')
 			var headerText = this.$('.header-label').text()
 			var contentText = this.$('.content').html()
 			this.model.set('header', headerText)
