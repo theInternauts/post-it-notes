@@ -35,7 +35,6 @@
   background-color: #95a5a6;
   text-align: right;
   padding: 2px;
-  width: 100%;
 }
 
 .post-it-group .header:hover {
@@ -47,8 +46,9 @@
   color: black;
   font-weight: bold;
   float: right;
+  background-color: #8D9FA0;
   margin: 0px 5px;
-
+  padding: 0px 5px;
 }
 
 .post-it-group .header a:hover {
@@ -74,7 +74,6 @@
   background-color: #c2c25b;
   text-align: right;
   padding: 2px;
-  width: 100%;
 }
 
 .post-it .header:hover {
@@ -87,8 +86,8 @@
   font-weight: bold;
   float: right;
   margin: 0px 5px;
-  border: 1px solid #c2c25b;
-  background-color: #B4B459;
+  background-color: #BBBB2D;
+  padding: 0px 5px;
 
 }
 
