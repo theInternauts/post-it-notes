@@ -8,7 +8,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 			'click .header-label' : 'setFocus',
 			'blur .header-label' : 'updateGroupHandler',
 			'dragstop': 'updateGroupPositionHandler',
-			'click .header a': 'removePostGroupItHandler'
+			'click .header a': 'removePostItGroupHandler'
 		},
 		template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content"></div>'),
 		render: function () {
@@ -44,7 +44,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 				this.model.set('position', newPosition)				
 			}
 		},
-		removePostGroupItHandler: function(event){
+		removePostItGroupHandler: function(event){
 			event.stopPropagation()
 			var targetID = $(event.target).parents('.post-it-group').attr('id')
 			this.collection.reset()
