@@ -62,7 +62,6 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 	  	},
 	  	postItDropUpdate: function(data){
 	  		if(this.model.get('id') == data.gid){
-		  		console.log("group:update: ", data.view.model)
 		  		this.collection.add(data.view.model)
 	  		}
 	  	},
