@@ -19,7 +19,6 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			return this
 		},
 		setFocus: function(event){
-			console.log('post focus')
 			event.stopPropagation()
 			this.$(event.target).focus()
 		},
@@ -29,8 +28,6 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.$el.css(post_model.get('position'))
 		},
 		updatePostHandler: function(event){
-			console.log('Post: ', this)
-			my_post = this
 			var headerText = this.$('.post.header-label').text()
 			var contentText = this.$('.content').html()
 			this.model.set('header', headerText)

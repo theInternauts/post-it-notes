@@ -23,13 +23,10 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 			return this
 		},
 		setFocus: function(event){
-			console.log('focus')
 			event.stopPropagation()
 			this.$(event.target).focus()
 		},
 		updateGroupHandler: function(event){
-			console.log('Group: ', this)
-			my_group = this			
 			var headerText = this.$('.group.header-label').text()
 			this.model.set('header', headerText)
 		},
