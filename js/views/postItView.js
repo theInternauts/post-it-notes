@@ -2,9 +2,9 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 	PostBoard.Views.PostItView = Backbone.View.extend({
 		events: {
 			'click .content' : 'setFocus',
-			'click .header-label' : 'setFocus',
+			"click .header.header-label" : 'setFocus',
 			'blur .content' : 'updatePostHandler',
-			'blur .header-label' : 'updatePostHandler',
+			"blur .header.header-label" : 'updatePostHandler',
 	    	'dragstop': 'updatePostPositionHandler',
 	    	'click .header a': 'removePostItHandler'
 		},
@@ -12,13 +12,14 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			class: 'post-it',
 			style: 'display:block;position:absolute;'
 		},
-		template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
+		template: _.template('<div class="header"><a>x</a><div class="header header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
 		render: function () {
 			this.$el.empty()
 		    this.$el.html(this.template(this.model))
 			return this
 		},
 		setFocus: function(event){
+			console.log('post focus')
 			event.stopPropagation()
 			this.$(event.target).focus()
 		},
@@ -28,6 +29,8 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.$el.css(post_model.get('position'))
 		},
 		updatePostHandler: function(event){
+			console.log('Post: ', this)
+			my_post = this
 			var headerText = this.$('.header-label').text()
 			var contentText = this.$('.content').html()
 			this.model.set('header', headerText)

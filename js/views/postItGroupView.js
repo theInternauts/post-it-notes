@@ -5,12 +5,12 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 			style: 'display:block;position:absolute;'
 		},
 		events: {
-			'click .header-label' : 'setFocus',
-			'blur .header-label' : 'updateGroupHandler',
+			'click  .header.header-label' : 'setFocus',
+			'blur .header.header-label' : 'updateGroupHandler',
 			'dragstop': 'updateGroupPositionHandler',
 			'click .header a': 'removePostItGroupHandler'
 		},
-		template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content"></div>'),
+		template: _.template('<div class="header"><a>x</a><div class="header header-label" contenteditable="true"><%= get("header") %></div></div><div class="content"></div>'),
 		render: function () {
 			this.$el.empty()
 		    this.$el.html(this.template(this.model))
@@ -23,10 +23,13 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 			return this
 		},
 		setFocus: function(event){
+			console.log('focus')
 			event.stopPropagation()
 			this.$(event.target).focus()
 		},
 		updateGroupHandler: function(event){
+			console.log('Group: ', this)
+			my_group = this			
 			var headerText = this.$('.header-label').text()
 			this.model.set('header', headerText)
 		},
