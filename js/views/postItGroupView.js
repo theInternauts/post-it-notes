@@ -5,12 +5,12 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 			style: 'display:block;position:absolute;'
 		},
 		events: {
-			'click  .header.header-label' : 'setFocus',
-			'blur .header.header-label' : 'updateGroupHandler',
+			'click  .group.header-label' : 'setFocus',
+			'blur .group.header-label' : 'updateGroupHandler',
 			'dragstop': 'updateGroupPositionHandler',
 			'click .header a': 'removePostItGroupHandler'
 		},
-		template: _.template('<div class="header"><a>x</a><div class="header header-label" contenteditable="true"><%= get("header") %></div></div><div class="content"></div>'),
+		template: _.template('<div class="header"><a>x</a><div class="group header-label" contenteditable="true"><%= get("header") %></div></div><div class="content"></div>'),
 		render: function () {
 			this.$el.empty()
 		    this.$el.html(this.template(this.model))

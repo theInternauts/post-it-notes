@@ -2,9 +2,9 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 	PostBoard.Views.PostItView = Backbone.View.extend({
 		events: {
 			'click .content' : 'setFocus',
-			"click .header.header-label" : 'setFocus',
+			"click .post.header-label" : 'setFocus',
 			'blur .content' : 'updatePostHandler',
-			"blur .header.header-label" : 'updatePostHandler',
+			"blur .post.header-label" : 'updatePostHandler',
 	    	'dragstop': 'updatePostPositionHandler',
 	    	'click .header a': 'removePostItHandler'
 		},
@@ -12,7 +12,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			class: 'post-it',
 			style: 'display:block;position:absolute;'
 		},
-		template: _.template('<div class="header"><a>x</a><div class="header header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
+		template: _.template('<div class="header"><a>x</a><div class="post header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
 		render: function () {
 			this.$el.empty()
 		    this.$el.html(this.template(this.model))
