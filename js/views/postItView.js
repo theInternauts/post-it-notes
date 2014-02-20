@@ -24,14 +24,14 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.$(event.target).focus()
 		},
 		updatePostFromModel: function(post_model){
-			this.$('.header-label').text(post_model.get('header'))
+			this.$('.post.header-label').text(post_model.get('header'))
 			this.$('.content').html(post_model.get('content'))
 			this.$el.css(post_model.get('position'))
 		},
 		updatePostHandler: function(event){
 			console.log('Post: ', this)
 			my_post = this
-			var headerText = this.$('.header-label').text()
+			var headerText = this.$('.post.header-label').text()
 			var contentText = this.$('.content').html()
 			this.model.set('header', headerText)
 			this.model.set('content', contentText)
