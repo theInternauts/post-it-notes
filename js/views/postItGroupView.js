@@ -30,11 +30,11 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'collections/postItCo
 		updateGroupHandler: function(event){
 			console.log('Group: ', this)
 			my_group = this			
-			var headerText = this.$('.header-label').text()
+			var headerText = this.$('.group.header-label').text()
 			this.model.set('header', headerText)
 		},
 		updateGroupFromModel: function(group_model){
-			this.$('.header-label').text(group_model.get('header'))
+			this.$('.group.header-label').text(group_model.get('header'))
 			this.$el.css(group_model.get('position'))
 		},
 		updateGroupPositionHandler: function(event){
