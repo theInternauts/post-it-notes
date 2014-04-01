@@ -16,11 +16,11 @@ require.config({
 			exports: 'Backbone'
 		},
 		'jquery-ui': {
-            deps: ['jquery']
-        },
-        'PostBoard': {
-        	exports: 'PostBoard'
-        }
+      deps: ['jquery']
+    },
+    'PostBoard': {
+    	exports: 'PostBoard'
+    }
 	}
 });
 
