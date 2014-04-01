@@ -19,8 +19,8 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			'click .header-label' : 'setFocus',
 			'blur .content' : 'updatePostHandler',
 			'blur .header-label' : 'updatePostHandler',
-	    	'dragstop': 'updatePostPositionHandler',
-	    	'click .header a': 'removePostItHandler'
+    	'dragstop': 'updatePostPositionHandler',
+    	'click .header a': 'removePostItHandler'
 		},	
 		initialize: function(){
 			console.log(this.model.get('id'))
