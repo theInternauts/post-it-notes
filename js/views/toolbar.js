@@ -12,7 +12,7 @@ define( ['PostBoard', 'backbone'], function ( PostBoard, Backbone ) {
 		},
 		addNewGroup: function (e) {
 			e.stopPropagation()
-			this.trigger('addNewGroup')
+			this.trigger('addNewGroup', e)
 		},
 		stopEventBubble: function(e){
 			e.stopPropagation();
