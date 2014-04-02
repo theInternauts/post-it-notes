@@ -4,13 +4,13 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 	    	'click body': 'addPostItHandler'
 		},
 		defaultPosition: {
-			top: 50,
-			left: 50
+			top: 70,
+			left: 20
 		},
 		render: function(){
 			this.setElement('html')
 			this.$('body').attr('id', 'board')
-			this.$('body').append(new PostBoard.Views.Toolbar().render().el)
+			this.$('body').append(this.toolbar.render().el)
 			return this
 		},
 		addPostItHandler: function(event){
@@ -32,14 +32,35 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			console.log('#'+ id)
 			this.$('#'+id).draggable('destroy')
 			this.allPostViews[id].remove()
+			//possible bug in next line when a post is handed over to a group. 
+			//Does this delete the object? Or simply remove its listing from the object allPostViews?
 			delete this.allPostViews[id]
 		},
+		addNewGroupHandler: function(event){
+			event.stopPropagation()
+			this.allGroupModels.add(new PostBoard.Models.PostIt({ id: 'group_' + event.timeStamp.toString(), position: this.defaultPosition }))
+		},
+		addNewGroup: function(group_model){
+			console.log("MAINBOARD: adding a new group!!!!!!!!", group_model)
+			var group_model = group_model
+			!group_model.get('id') ? group_model.set('id', Date.now().toString()) : null
+			!group_model.get('position') ? group_model.set('position', this.defaultPosition) : null
+			var newView = new PostBoard.Views.PostItGroupView({ model: group_model, collection: this.allGroupModels })
+			this.allGroupViews[group_model.get('id')] = newView;
+			this.$('body').append(newView.render().$el.css(group_model.get('position')).attr('id',group_model.get('id')).draggable({ handle: '.header-label' }))
+			return this
+		},
 		initialize: function(){
+			this.toolbar = new PostBoard.Views.Toolbar()
+			this.allGroupModels = new PostBoard.Collections.PostItCollection()
+			this.allGroupViews = {}
 			this.allPostModels = new PostBoard.Collections.PostItCollection()
 			this.allPostViews = {}
 			this.$('body').on('click', this.addPostItHandler)
+			this.allGroupModels.on('add', this.addNewGroup, this)			
 			this.allPostModels.on('add', this.addPostIt, this)
 			this.allPostModels.on('remove', this.removePostIt, this)
+			this.listenTo(this.toolbar, 'addNewGroup', this.addNewGroupHandler);
 		}
 	})
 
