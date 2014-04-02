@@ -24,7 +24,7 @@ require.config({
 	}
 });
 
-requirejs( ['PostBoard', 'jquery', 'underscore', 'backbone', 'models/postIt', 'collections/postItCollection', 'views/toolbar', 'views/postItView', 'views/mainBoard', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
+requirejs( ['PostBoard', 'jquery', 'underscore', 'backbone', 'models/postIt', 'collections/postItCollection', 'views/toolbar', 'views/postItView', 'views/postItGroupView', 'views/mainBoard', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
 	$(function() {
 		b = new PostBoard.Views.MainBoard().render()
 	})
