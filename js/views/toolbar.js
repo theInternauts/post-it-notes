@@ -7,7 +7,7 @@ define( ['PostBoard', 'backbone'], function ( PostBoard, Backbone ) {
 			return this
 		},
 		events: {
-	    	'click ul': 'addNewGroup',
+	    	'click ul a#btn-new-group': 'addNewGroup',
 	    	'click' : 'stopEventBubble'
 		},
 		addNewGroup: function (e) {
