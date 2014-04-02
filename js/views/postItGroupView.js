@@ -29,7 +29,6 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		},	
 		initialize: function(){
 			console.log(this.model.get('id'))
-			console.log("collection: ", this.collection)
 			this.allPostModels = new PostBoard.Collections.PostItCollection()
 			//this.allPostViews = {}
 			this.model.on('change', this.updatePostFromModel, this)

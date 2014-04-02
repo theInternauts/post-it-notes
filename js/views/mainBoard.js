@@ -41,7 +41,6 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.allGroupModels.add(new PostBoard.Models.PostIt({ id: 'group_' + event.timeStamp.toString(), position: this.defaultPosition }))
 		},
 		addNewGroup: function(group_model){
-			console.log("MAINBOARD: adding a new group!!!!!!!!", group_model)
 			var group_model = group_model
 			!group_model.get('id') ? group_model.set('id', Date.now().toString()) : null
 			!group_model.get('position') ? group_model.set('position', this.defaultPosition) : null
