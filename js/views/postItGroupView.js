@@ -29,6 +29,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		},	
 		initialize: function(){
 			console.log(this.model.get('id'))
+			console.log("collection: ", this.collection)
 			this.allPostModels = new PostBoard.Collections.PostItCollection()
 			//this.allPostViews = {}
 			this.model.on('change', this.updatePostFromModel, this)
@@ -56,6 +57,8 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		},
 		removePostItHandler: function(event){
 			event.stopPropagation()
+			//TODO: add logic to delete each PostIt in this.allPostModels and purge the Views from this.allPostViews
+			this.allPostModels.reset()
 			var targetID = $(event.target).parents('.post-it-group').attr('id')
 			targets = this.collection.where({ id: targetID })
 			this.collection.remove(targets)
