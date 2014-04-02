@@ -54,7 +54,7 @@
   color: #eee;
 }
 
-.post-it-group > .content {
+.post-it-group .content {
   padding: 10px;
   min-height: 115px;
   outline: none;
