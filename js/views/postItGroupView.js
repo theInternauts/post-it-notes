@@ -9,6 +9,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			//this will throw erros all day!
 			//this.el.empty()
 	    this.$el.html(this.template(this.model))
+	    this.$( ".content" ).droppable({ hoverClass: "drop-hover", tolerance: "fit" });
 	    // var contentDIV = this.$('.content')
 	    // _.each(this.allPostViews, function(view){
 	    // 	contentDIV.append(view.el)
@@ -25,7 +26,8 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			'click .header-label' : 'setFocus',
 			'blur .header-label' : 'updatePostHandler',
     	'dragstop': 'updatePostPositionHandler',
-    	'click .header a': 'removePostItHandler'
+    	'click .header a': 'removePostItHandler',
+    	'drop .content' : 'dropHandler' 
 		},	
 		initialize: function(){
 			console.log(this.model.get('id'))
@@ -61,6 +63,16 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			var targetID = $(event.target).parents('.post-it-group').attr('id')
 			targets = this.collection.where({ id: targetID })
 			this.collection.remove(targets)
+		},
+		dropHandler: function(event,ui){
+			var ui_node = ui.draggable
+			ui_node.css({ 'position':'static', 'margin':'0 auto 10px auto' })
+  		$(event.target).append(ui_node)
+  		var gid = $(event.target).parents('.post-it-group').attr('id')
+  		var pid = ui_node.attr('id')
+  		var response = { pid: pid, gid: gid }
+  		PostBoard.Events.trigger('group:postItAdded', response)
+
 		}		
 	})
 	
