@@ -68,7 +68,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.allGroupModels.on('remove', this.removeNewGroup, this)			
 			this.allPostModels.on('add', this.addPostIt, this)
 			this.allPostModels.on('remove', this.removePostIt, this)
-			this.listenTo(this.toolbar, 'addNewGroup', this.addNewGroupHandler);
+			PostBoard.Events.on('toolbar:groupAdd', this.addNewGroupHandler, this)
 		}
 	})
 
