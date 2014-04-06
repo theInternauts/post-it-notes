@@ -9,7 +9,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			//this will throw erros all day!
 			//this.el.empty()
 	    this.$el.html(this.template(this.model))
-	    this.$( ".content" ).droppable({ hoverClass: "drop-hover", tolerance: "fit" });
+	    this.$( ".content" ).droppable({ hoverClass: "drop-hover", tolerance: "pointer" });
 	    // var contentDIV = this.$('.content')
 	    // _.each(this.allPostViews, function(view){
 	    // 	contentDIV.append(view.el)
