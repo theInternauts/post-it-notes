@@ -57,6 +57,14 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			//Does this delete the object? Or simply remove its listing from the object allGroupViews allowing it to be referenced elsewhere (or garbage collected if it has been orphanded)?
 			delete this.allGroupViews[id]
 		},
+		removeDroppedPostItModel: function(data){
+			var dropped_model = this.allPostModels.get(data.pid)
+			this.allPostModels.remove(dropped_model, { silent: true })
+			//this.allPostViews[data.pid].remove()
+			delete this.allPostViews[data.pid]
+			PostBoard.Events.trigger('group:postItReleased', { gid: data.gid, model: dropped_model })
+			
+		},		
 		initialize: function(){
 			this.toolbar = new PostBoard.Views.Toolbar()
 			this.allGroupModels = new PostBoard.Collections.PostItCollection()
@@ -69,6 +77,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.allPostModels.on('add', this.addPostIt, this)
 			this.allPostModels.on('remove', this.removePostIt, this)
 			PostBoard.Events.on('toolbar:groupAdd', this.addNewGroupHandler, this)
+			PostBoard.Events.on('group:postItAdded', this.removeDroppedPostItModel, this)
 		}
 	})
 
