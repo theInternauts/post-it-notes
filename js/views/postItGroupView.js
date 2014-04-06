@@ -7,7 +7,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content"><%= get("content") %></div>'),
 		render: function () {
 			//this will throw erros all day!
-			//this.el.empty()
+			// this.$el.empty()
 	    this.$el.html(this.template(this.model))
 	    this.$( ".content" ).droppable({ hoverClass: "drop-hover", tolerance: "pointer" });
 	    // var contentDIV = this.$('.content')
@@ -33,10 +33,12 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			console.log(this.model.get('id'))
 			this.allPostModels = new PostBoard.Collections.PostItCollection()
 			this.allPostViews = {}
+			window.vl = this.allPostViews
+			window.ml = this.allPostModels
 			this.model.on('change', this.updatePostFromModel, this)
 			this.allPostModels.on('add', this.renderPostIt, this)
 			this.allPostModels.on('remove', this.popPostIt, this)
-			this.allPostModels.on('reset',function(models, options){console.log("PG: removed: ", models, options)}, this)
+			this.allPostModels.on('reset', this.purgePostCollection, this)
 			PostBoard.Events.on('group:postItReleased', this.pushPostIt, this)
 		},
 		setFocus: function(event){
@@ -62,12 +64,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		},
 		removePostItHandler: function(event){
 			event.stopPropagation()
-			//TODO: add logic to delete each PostIt in this.allPostModels and purge the Views from this.allPostViews
-			//Possible race condition here with multiple post models, there may not be enough time for the events to fire
-			// before the parent View is deleted.  This may be a memory leak.
-			this.allPostModels.each(function(m){
-				this.allPostModels.remove(m)
-			}, this)
+			this.allPostModels.reset()
 			var targetID = $(event.target).parents('.post-it-group').attr('id')
 			targets = this.collection.where({ id: targetID })
 			this.collection.remove(targets)
@@ -85,7 +82,6 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		},
 		popPostIt: function(model){
 			var model_id = model.get('id')
-			console.log("ID removal: ", model_id)
 			this.allPostViews[model_id].remove()
 			delete this.allPostViews[model_id]
 			console.log('popped: #' + model_id + ' from: #group_' + this.model.get('id'))
@@ -107,6 +103,12 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		},
 		getContentPosition: function(){
 			return { 'position':'static !important', 'margin':'0 auto 10px auto', 'top':'', 'left': '' }
+		},
+		purgePostCollection: function(models, options){
+			that = this
+			_.each(options.previousModels,function(model){
+				that.popPostIt.call(that,model)
+			})
 		}
 	})
 	
