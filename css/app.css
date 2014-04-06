@@ -22,7 +22,7 @@
 }
 
 .post-it-group {
-  position: absolute !important;
+  /*position: absolute !important;*/
   width: 190px;
   box-shadow: inset 0px 2px 8px #887B5D;
   overflow: hidden;
@@ -61,7 +61,7 @@
 }
 
 .post-it {
-  position: absolute !important;
+  /*position: absolute !important;*/
   width: 160px;
   background-color: yellow;
   box-shadow: -2px 2px 5px #555;
@@ -101,3 +101,6 @@
   outline: none;
 }
 
+.absolute {
+  position: absolute !important;
+}
