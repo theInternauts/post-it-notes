@@ -17,16 +17,16 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			return this
 		},
 		updatePostFromModel: function(post_model){
-			this.$('.header-label').text(post_model.get('header'))
+			this.$('.header-label:first').text(post_model.get('header'))
 			//this.$('.content').html(post_model.get('content'))
 			this.$el.css(post_model.get('position'))		
 		},
 		events: {
-			'click .header-label' : 'setFocus',
-			'blur .header-label' : 'updatePostHandler',
+			'click .header-label:first' : 'setFocus',
+			'blur .header-label:first' : 'updatePostHandler',
     	'dragstop': 'updatePostPositionHandler',
-    	'click .header a': 'removePostItHandler',
-    	'drop .content' : 'dropHandler' 
+    	'click .header a:first': 'removePostItHandler',
+    	'drop .content:first' : 'dropHandler' 
 		},	
 		initialize: function(){
 			console.log(this.model.get('id'))
