@@ -24,7 +24,8 @@
 .post-it-group {
   /*position: absolute !important;*/
   width: 190px;
-  box-shadow: inset 0px 2px 8px #887B5D;
+  box-shadow: inset 0px 2px 8px #3F341C;
+  background-color: #837555;
   overflow: hidden;
   border-radius: 7px;
   z-index: 1000;
@@ -38,7 +39,7 @@
 }
 
 .post-it-group .header:hover {
-  background-color: #a8a860;
+  background-color: #AC9024;;
 }
 
 .post-it-group .header a, .post-it-group .header a:visited {
@@ -103,4 +104,8 @@
 
 .absolute {
   position: absolute !important;
+}
+
+.drop-hover {
+  opacity: 0.5
 }
