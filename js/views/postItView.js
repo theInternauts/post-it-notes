@@ -1,7 +1,7 @@
 define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
 	PostBoard.Views.PostItView = Backbone.View.extend({
 		attributes: { 
-			class: 'post-it',
+			class: 'post-it absolute',
 			style: 'display:block'
 		},
 		template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
