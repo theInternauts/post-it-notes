@@ -27,7 +27,11 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		render: function () {
 			this.$el.empty()
 	    this.$el.html(this.template(this.model))
-	    this.$( ".content" ).droppable({ hoverClass: "drop-hover", tolerance: "pointer" });
+	    this.$( ".content" ).droppable({ 
+	    	hoverClass: "drop-hover",
+	    	tolerance: "pointer",
+	    	accept: '.post-it'
+		  });
 	    var contentDIV = this.$('.content:first')
 	    _.each(this.allPostViews, function(view){
 	    	contentDIV.append(view.render().el)
