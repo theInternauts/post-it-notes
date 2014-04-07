@@ -45,24 +45,23 @@ html, body {
 }
 
 .post-it-group {
-  /*position: absolute !important;*/
   width: 190px;
   box-shadow: inset 0px 2px 8px #3F341C;
   background-color: #837555;
   overflow: hidden;
   border-radius: 7px;
   z-index: 1000;
+  background-color: #7f8c8d;
 }
 
 .post-it-group .header {
-  background-color: #928465;
+  background-color: #95a5a6;
   text-align: right;
   padding: 2px;
-  width: 100%;
 }
 
 .post-it-group .header:hover {
-  background-color: #AC9024;;
+  background-color: #AC9024;
 }
 
 .post-it-group .header a, .post-it-group .header a:visited {
@@ -70,8 +69,9 @@ html, body {
   color: black;
   font-weight: bold;
   float: right;
+  background-color: #8D9FA0;
   margin: 0px 5px;
-
+  padding: 0px 5px;
 }
 
 .post-it-group .header a:hover {
@@ -85,7 +85,6 @@ html, body {
 }
 
 .post-it {
-  /*position: absolute !important;*/
   width: 160px;
   background-color: yellow;
   box-shadow: -2px 2px 5px #555;
@@ -97,7 +96,6 @@ html, body {
   background-color: #c2c25b;
   text-align: right;
   padding: 2px;
-  width: 100%;
 }
 
 .post-it .header:hover {
@@ -110,8 +108,8 @@ html, body {
   font-weight: bold;
   float: right;
   margin: 0px 5px;
-  border: 1px solid #c2c25b;
-  background-color: #B4B459;
+  background-color: #BBBB2D;
+  padding: 0px 5px;
 
 }
 
@@ -131,9 +129,4 @@ html, body {
 
 .drop-hover {
   opacity: 0.5
-}
-
-.no-select:selection {
-  user-select: none;
-  -moz-user-select: none;
 }
