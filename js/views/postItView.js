@@ -5,15 +5,6 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			style: 'display:block'
 		},
 		template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content" contenteditable="true"><%= get("content") %></div>'),
-		render: function () {
-		    this.$el.html(this.template(this.model))
-			return this
-		},
-		updatePostFromModel: function(post_model){
-			this.$('.header-label').text(post_model.get('header'))
-			this.$('.content').html(post_model.get('content'))
-			this.$el.css(post_model.get('position'))		
-		},
 		events: {
 			'click .content' : 'setFocus',
 			'click .header-label' : 'setFocus',
@@ -25,6 +16,15 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 		initialize: function(){
 			console.log(this.model.get('id'))
 			this.model.on('change', this.updatePostFromModel, this)
+		},
+		render: function () {
+		    this.$el.html(this.template(this.model))
+			return this
+		},
+		updatePostFromModel: function(post_model){
+			this.$('.header-label').text(post_model.get('header'))
+			this.$('.content').html(post_model.get('content'))
+			this.$el.css(post_model.get('position'))		
 		},
 		setFocus: function(event){
 			event.stopPropagation()

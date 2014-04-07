@@ -5,22 +5,6 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			style: 'display:block'
 		},
 		template: _.template('<div class="header"><a>x</a><div class="header-label" contenteditable="true"><%= get("header") %></div></div><div class="content"><%= get("content") %></div>'),
-		render: function () {
-			this.$el.empty()
-	    this.$el.html(this.template(this.model))
-	    this.$( ".content" ).droppable({ hoverClass: "drop-hover", tolerance: "pointer" });
-	    var contentDIV = this.$('.content:first')
-	    _.each(this.allPostViews, function(view){
-	    	contentDIV.append(view.render().el)
-	    })
-
-			return this
-		},
-		updatePostFromModel: function(post_model){
-			this.$('.header-label:first').text(post_model.get('header'))
-			//this.$('.content').html(post_model.get('content'))
-			this.$el.css(post_model.get('position'))		
-		},
 		events: {
 			'click .header-label:first' : 'setFocus',
 			'blur .header-label:first' : 'updatePostHandler',
@@ -39,6 +23,22 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			this.allPostModels.on('remove', this.popPostIt, this)
 			this.allPostModels.on('reset', this.purgePostCollection, this)
 			PostBoard.Events.on('group:postItReleased', this.pushPostIt, this)
+		},
+		render: function () {
+			this.$el.empty()
+	    this.$el.html(this.template(this.model))
+	    this.$( ".content" ).droppable({ hoverClass: "drop-hover", tolerance: "pointer" });
+	    var contentDIV = this.$('.content:first')
+	    _.each(this.allPostViews, function(view){
+	    	contentDIV.append(view.render().el)
+	    })
+
+			return this
+		},
+		updatePostFromModel: function(post_model){
+			this.$('.header-label:first').text(post_model.get('header'))
+			//this.$('.content').html(post_model.get('content'))
+			this.$el.css(post_model.get('position'))		
 		},
 		setFocus: function(event){
 			event.stopPropagation()

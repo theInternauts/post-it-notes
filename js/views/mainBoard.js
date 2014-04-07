@@ -1,11 +1,25 @@
 define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
 	PostBoard.Views.MainBoard = Backbone.View.extend({
-		events: {
-	    	'click body': 'addPostItHandler'
-		},
 		defaultPosition: {
 			top: 70,
 			left: 20
+		},
+		events: {
+	    	'click body': 'addPostItHandler'
+		},		
+		initialize: function(){
+			this.toolbar = new PostBoard.Views.Toolbar()
+			this.allGroupModels = new PostBoard.Collections.PostItCollection()
+			this.allGroupViews = {}
+			this.allPostModels = new PostBoard.Collections.PostItCollection()
+			this.allPostViews = {}
+			this.$('body').on('click', this.addPostItHandler)
+			this.allGroupModels.on('add', this.addNewGroup, this)			
+			this.allGroupModels.on('remove', this.removeNewGroup, this)			
+			this.allPostModels.on('add', this.addPostIt, this)
+			this.allPostModels.on('remove', this.removePostIt, this)
+			PostBoard.Events.on('toolbar:groupAdd', this.addNewGroupHandler, this)
+			PostBoard.Events.on('group:postItAdded', this.removeDroppedPostItModel, this)
 		},
 		render: function(){
 			this.setElement('html')
@@ -64,20 +78,6 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			delete this.allPostViews[data.pid]
 			PostBoard.Events.trigger('group:postItReleased', { gid: data.gid, model: dropped_model })
 			
-		},		
-		initialize: function(){
-			this.toolbar = new PostBoard.Views.Toolbar()
-			this.allGroupModels = new PostBoard.Collections.PostItCollection()
-			this.allGroupViews = {}
-			this.allPostModels = new PostBoard.Collections.PostItCollection()
-			this.allPostViews = {}
-			this.$('body').on('click', this.addPostItHandler)
-			this.allGroupModels.on('add', this.addNewGroup, this)			
-			this.allGroupModels.on('remove', this.removeNewGroup, this)			
-			this.allPostModels.on('add', this.addPostIt, this)
-			this.allPostModels.on('remove', this.removePostIt, this)
-			PostBoard.Events.on('toolbar:groupAdd', this.addNewGroupHandler, this)
-			PostBoard.Events.on('group:postItAdded', this.removeDroppedPostItModel, this)
 		}
 	})
 
