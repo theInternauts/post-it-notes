@@ -5,7 +5,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			left: 20
 		},
 		events: {
-	    	'click body': 'addPostItHandler'
+	    	'dblclick body': 'addPostItHandler'
 		},		
 		initialize: function(){
 			this.toolbar = new PostBoard.Views.Toolbar()
@@ -77,7 +77,7 @@ define( [ 'PostBoard', 'jquery', 'underscore', 'backbone', 'jquery-ui'], functio
 			//this.allPostViews[data.pid].remove()
 			delete this.allPostViews[data.pid]
 			PostBoard.Events.trigger('group:postItReleased', { gid: data.gid, model: dropped_model })
-			
+
 		}
 	})
 
