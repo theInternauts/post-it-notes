@@ -7,8 +7,17 @@ define( ['PostBoard', 'backbone'], function ( PostBoard, Backbone ) {
 			return this
 		},
 		events: {
-	    	'dblclick ul': 'test'
-		}	
+	    	'click ul a#btn-new-group': 'addGroupHandler',
+	    	'click' : 'stopEventBubble',
+	    	'dblclick' : 'stopEventBubble'
+		},
+		addGroupHandler: function (e) {
+			e.stopPropagation()
+			PostBoard.Events.trigger('toolbar:groupAdd', e)
+		},
+		stopEventBubble: function(e){
+			e.stopPropagation();
+		}
 	})
 
 	return PostBoard.Views.Toolbar

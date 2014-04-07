@@ -18,6 +18,7 @@ ToDo:
 + ~~ensure bi-directional model/view syncing~~
 + ~~Need to re-tool with Backbone~~
 + UI design overhaul
++ Needs a ~MASSIVE~ refactor.  The MainBoard, PostIt and PostItGroup are almost the exact same thing.  I can DRY this up
 + Groups of notes on a single board
 + major canvas zooming capability for an *"infinite board"*
 + named groups
