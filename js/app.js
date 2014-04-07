@@ -26,6 +26,7 @@ require.config({
 
 requirejs( ['PostBoard', 'jquery', 'underscore', 'backbone', 'events', 'models/postIt', 'collections/postItCollection', 'views/toolbar', 'views/postItView', 'views/postItGroupView', 'views/mainBoard', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
 	$(function() {
-		b = new PostBoard.Views.MainBoard().render()
+		window.b = new PostBoard.Views.MainBoard({ el: 'body' }).render()
+		p = PostBoard
 	})
 })

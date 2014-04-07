@@ -8,7 +8,8 @@ define( ['PostBoard', 'backbone'], function ( PostBoard, Backbone ) {
 		},
 		events: {
 	    	'click ul a#btn-new-group': 'addGroupHandler',
-	    	'click' : 'stopEventBubble'
+	    	'click' : 'stopEventBubble',
+	    	'dblclick' : 'stopEventBubble'
 		},
 		addGroupHandler: function (e) {
 			e.stopPropagation()
