@@ -16,16 +16,17 @@ require.config({
 			exports: 'Backbone'
 		},
 		'jquery-ui': {
-            deps: ['jquery']
-        },
-        'PostBoard': {
-        	exports: 'PostBoard'
-        }
+      deps: ['jquery']
+    },
+    'PostBoard': {
+    	exports: 'PostBoard'
+    }
 	}
 });
 
-requirejs( ['PostBoard', 'jquery', 'underscore', 'backbone', 'models/postIt', 'collections/postItCollection', 'views/toolbar', 'views/postItView', 'views/mainBoard', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
+requirejs( ['PostBoard', 'jquery', 'underscore', 'backbone', 'events', 'models/postIt', 'collections/postItCollection', 'views/toolbar', 'views/postItView', 'views/postItGroupView', 'views/mainBoard', 'jquery-ui'], function( PostBoard, $, _, Backbone ){
 	$(function() {
-		b = new PostBoard.Views.MainBoard().render()
+		window.b = new PostBoard.Views.MainBoard({ el: 'body' }).render()
+		p = PostBoard
 	})
 })
